@@ -1,0 +1,15 @@
+name: KinetiCore
+authors: [Hepolite]
+main: com.hepolite.kineticore.KinetiCore
+version: 1.0.0
+description: Provides the basic functionality used in other plugins
+
+commands:
+  kineticore:
+    description: The base entry point to all KinetiCore commands
+    usage: /kineticore <arguments>
+    permission: kineticore
+    permission-message: Sorry, you don't have permission to use this command
+permissions:
+  kineticore:
+    description: Gives access to the KinetiCore commands

@@ -1,7 +1,7 @@
 name: KinetiCore
 authors: [Hepolite]
 main: com.hepolite.kineticore.KinetiCore
-version: 1.0.0
+version: 0.0.1
 description: Provides the basic functionality used in other plugins
 
 commands:

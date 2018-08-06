@@ -19,6 +19,8 @@ public abstract class CmdElementValue implements ICmdElement
 		final CmdContext context) throws CmdParseException
 	{
 		final Object value = parse(user, args);
+		if (value == null)
+			throw new CmdParseException("Value cannot be null");
 
 		if (value instanceof Iterable<?>)
 			for (final Object object : (Iterable<?>) value)

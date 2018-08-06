@@ -1,10 +1,23 @@
 package com.hepolite.kineticore.cmd;
 
+import com.hepolite.kineticore.cmd.elements.CmdElementBool;
 import com.hepolite.kineticore.cmd.elements.CmdElementNumber;
+import com.hepolite.kineticore.cmd.elements.CmdElementString;
 import com.hepolite.kineticore.cmd.elements.ICmdElement;
 
 public final class GenericArgs
 {
+	/**
+	 * Requires an argument to be a boolean.
+	 * 
+	 * @param key The key to store the value under
+	 * @return The element to match the input
+	 */
+	public final static ICmdElement bool(final String key)
+	{
+		return new CmdElementBool(key);
+	}
+
 	/**
 	 * Requires an argument to be a byte. The value may be specified as base 2,
 	 * 10 or 16.
@@ -74,5 +87,26 @@ public final class GenericArgs
 	{
 		return new CmdElementNumber<>(key, Short::parseShort, Short::parseShort,
 			"Expected a short, but '%s' was not");
+	}
+
+	/**
+	 * Requires an argument to be a string.
+	 * 
+	 * @param key The key to store the value under
+	 * @return The element to match the input
+	 */
+	public final static ICmdElement string(final String key)
+	{
+		return new CmdElementString.Single(key);
+	}
+	/**
+	 * Consumes all remaining arguments, concatenated to a single string
+	 * 
+	 * @param key The key to store the value under
+	 * @return The element to match the input
+	 */
+	public final static ICmdElement remainder(final String key)
+	{
+		return new CmdElementString.Remaining(key);
 	}
 }

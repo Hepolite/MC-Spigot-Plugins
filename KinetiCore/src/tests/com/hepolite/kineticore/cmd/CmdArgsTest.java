@@ -14,6 +14,11 @@ class CmdArgsTest extends BaseTest
 	{
 		assertEquals(1, new CmdArgs(strings("Test")).size());
 		assertEquals(2, new CmdArgs(strings("Test", "Foo")).size());
+
+		final CmdArgs args = new CmdArgs("Hello", "World!");
+		assertEquals(2, args.size());
+		args.consume();
+		assertEquals(1, args.size());
 	}
 	@Test
 	void testEmpty()

@@ -21,11 +21,11 @@ public final class CmdArgs
 	// ...
 
 	/**
-	 * @return The number of arguments stored in the structure
+	 * @return The number of remaining arguments stored in the structure
 	 */
 	public int size()
 	{
-		return arguments.size();
+		return arguments.size() - index;
 	}
 	/**
 	 * @return True iff there are no arguments in the structure
@@ -59,10 +59,10 @@ public final class CmdArgs
 	 */
 	public String[] consume(final int count) throws CmdParseException
 	{
-		if (size() < index + count)
+		if (size() < count)
 			throw new CmdExecutionException(String.format(
 				"Attempting to extract %d argument(s), %d remains", count,
-				size() - index));
+				size()));
 
 		final String[] args = new String[count];
 		for (int i = 0; i < count; ++i)

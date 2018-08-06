@@ -10,7 +10,7 @@ import com.google.common.collect.Multimap;
 
 public final class CmdContext
 {
-	private final Multimap<String, Object> values = ArrayListMultimap.create();
+	private Multimap<String, Object> values = ArrayListMultimap.create();
 
 	// ...
 
@@ -106,5 +106,39 @@ public final class CmdContext
 		@SuppressWarnings("unchecked")
 		final Collection<T> contents = (Collection<T>) values.get(key);
 		return contents.toArray(def);
+	}
+
+	// ...
+
+	/**
+	 * Creates a new snapshot of the context state, which may be restored at a
+	 * later point in time.
+	 * 
+	 * @return The snapshot of the current context state
+	 */
+	public Snapshot getSnapshot()
+	{
+		return new Snapshot(values);
+	}
+	/**
+	 * Restores the context state to the state of the given snapshot.
+	 * 
+	 * @param snapshot The snapshot to restore to
+	 */
+	public void restoreSnapshot(final Snapshot snapshot)
+	{
+		values = snapshot.values;
+	}
+
+	// ...
+
+	public static final class Snapshot
+	{
+		private Multimap<String, Object> values = ArrayListMultimap.create();
+
+		public Snapshot(final Multimap<String, Object> values)
+		{
+			values.forEach((key, value) -> this.values.put(key, value));
+		}
 	}
 }

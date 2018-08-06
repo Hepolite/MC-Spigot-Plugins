@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import com.hepolite.kineticore.cmd.CmdContext.Snapshot;
 import com.hepolite.kineticore.util.BaseTest;
 
 class CmdContextTest extends BaseTest
@@ -37,5 +38,17 @@ class CmdContextTest extends BaseTest
 
 		assertArrayEquals(generics(2, 3, 4),
 			context.getAll("bar", new Integer[0]));
+	}
+
+	@Test
+	void testSnapshot()
+	{
+		final CmdContext context = new CmdContext();
+		final Snapshot snapshot = context.getSnapshot();
+
+		context.put("foo", "Hello World!");
+		assertTrue(context.has("foo"));
+		context.restoreSnapshot(snapshot);
+		assertFalse(context.has("foo"));
 	}
 }

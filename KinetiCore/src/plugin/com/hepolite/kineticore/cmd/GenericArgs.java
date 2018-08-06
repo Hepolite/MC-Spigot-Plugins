@@ -22,6 +22,8 @@ public final class GenericArgs
 		return new CmdElementNone();
 	}
 
+	// ...
+
 	/**
 	 * Consumes a series of arguments. Usages is the matching child's elements
 	 * concatenated.

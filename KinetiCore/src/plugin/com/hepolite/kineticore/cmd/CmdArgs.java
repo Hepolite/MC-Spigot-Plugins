@@ -60,9 +60,9 @@ public final class CmdArgs
 	public String[] consume(final int count) throws CmdParseException
 	{
 		if (size() < index + count)
-			throw new CmdExecutionException(
-				String.format("Attempting to extract %d arguments, %d remains",
-					count, size()));
+			throw new CmdExecutionException(String.format(
+				"Attempting to extract %d argument(s), %d remains", count,
+				size() - index));
 
 		final String[] args = new String[count];
 		for (int i = 0; i < count; ++i)

@@ -23,6 +23,7 @@ public final class CmdElementBool extends CmdElementValue
 		case "y":
 		case "yes":
 		case "yep":
+		case "yup":
 			return true;
 		case "f":
 		case "false":

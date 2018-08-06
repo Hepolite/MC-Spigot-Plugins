@@ -2,11 +2,25 @@ package com.hepolite.kineticore.cmd;
 
 import com.hepolite.kineticore.cmd.elements.CmdElementBool;
 import com.hepolite.kineticore.cmd.elements.CmdElementNumber;
+import com.hepolite.kineticore.cmd.elements.CmdElementSequence;
 import com.hepolite.kineticore.cmd.elements.CmdElementString;
 import com.hepolite.kineticore.cmd.elements.ICmdElement;
 
 public final class GenericArgs
 {
+	/**
+	 * Consumes a series of arguments. Usage is the elements concatenated.
+	 * 
+	 * @param elements The sequence that is required
+	 * @return The element to match the input
+	 */
+	public final static ICmdElement sequence(final ICmdElement... elements)
+	{
+		return new CmdElementSequence(elements);
+	}
+
+	// ...
+
 	/**
 	 * Requires an argument to be a boolean.
 	 * 

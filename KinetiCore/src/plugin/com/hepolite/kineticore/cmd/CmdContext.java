@@ -29,13 +29,15 @@ public final class CmdContext
 	 * Adds the given value to the context and stores it under the given key.
 	 * 
 	 * @param key The key to store the value under
-	 * @param value The value to store in the context
+	 * @param values The values to store in the context
 	 */
-	public <T> void put(final String key, final T value)
+	@SafeVarargs
+	public final <T> void put(final String key, final T... values)
 	{
-		if (value == null)
-			throw new IllegalArgumentException("Value cannot be null");
-		values.put(key, value);
+		if (values.length == 0)
+			throw new IllegalArgumentException("Values cannot empty");
+		for (final T value : values)
+			this.values.put(key, value);
 	}
 
 	/**

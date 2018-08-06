@@ -22,8 +22,7 @@ class CmdContextTest extends BaseTest
 	void testGet()
 	{
 		final CmdContext context = new CmdContext();
-		context.put("foo", 1);
-		context.put("foo", 3);
+		context.put("foo", 1, 2, "test", 42.0);
 		context.put("bar", 3);
 
 		assertEquals((Integer) 1, context.get("foo", 0));
@@ -34,10 +33,9 @@ class CmdContextTest extends BaseTest
 	{
 		final CmdContext context = new CmdContext();
 		context.put("foo", 1);
-		context.put("bar", 2);
-		context.put("bar", 3);
+		context.put("bar", 2, 3, 4);
 
-		assertArrayEquals(generics(2, 3),
+		assertArrayEquals(generics(2, 3, 4),
 			context.getAll("bar", new Integer[0]));
 	}
 }

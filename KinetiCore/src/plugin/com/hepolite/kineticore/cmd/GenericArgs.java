@@ -1,6 +1,7 @@
 package com.hepolite.kineticore.cmd;
 
 import com.hepolite.kineticore.cmd.elements.CmdElementBool;
+import com.hepolite.kineticore.cmd.elements.CmdElementFirst;
 import com.hepolite.kineticore.cmd.elements.CmdElementNumber;
 import com.hepolite.kineticore.cmd.elements.CmdElementOptional;
 import com.hepolite.kineticore.cmd.elements.CmdElementSequence;
@@ -10,16 +11,15 @@ import com.hepolite.kineticore.cmd.elements.ICmdElement;
 public final class GenericArgs
 {
 	/**
-	 * Consumes a series of arguments. Usage is the elements concatenated.
+	 * Consumes one of a series of arguments. Only the first valid is used.
 	 * 
-	 * @param elements The sequence that is required
+	 * @param elements The elements to choose from
 	 * @return The element to match the input
 	 */
-	public final static ICmdElement sequence(final ICmdElement... elements)
+	public final static ICmdElement first(final ICmdElement... elements)
 	{
-		return new CmdElementSequence(elements);
+		return new CmdElementFirst(elements);
 	}
-
 	/**
 	 * Consumes a series of optional arguments. Usage is the elements
 	 * concatenated.
@@ -30,6 +30,16 @@ public final class GenericArgs
 	public final static ICmdElement optional(final ICmdElement... elements)
 	{
 		return new CmdElementOptional(elements);
+	}
+	/**
+	 * Consumes a series of arguments. Usage is the elements concatenated.
+	 * 
+	 * @param elements The sequence that is required
+	 * @return The element to match the input
+	 */
+	public final static ICmdElement sequence(final ICmdElement... elements)
+	{
+		return new CmdElementSequence(elements);
 	}
 
 	// ...

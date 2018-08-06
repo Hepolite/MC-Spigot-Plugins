@@ -1,6 +1,6 @@
 package com.hepolite.kineticore.cmd;
 
-public class CmdProcessException extends RuntimeException
+public class CmdExecutionException extends RuntimeException
 {
 	/**
 	 * Auto-generated serial version
@@ -9,11 +9,11 @@ public class CmdProcessException extends RuntimeException
 
 	// ...
 
-	public CmdProcessException()
+	public CmdExecutionException()
 	{
 		super();
 	}
-	public CmdProcessException(final String message)
+	public CmdExecutionException(final String message)
 	{
 		super(message);
 	}

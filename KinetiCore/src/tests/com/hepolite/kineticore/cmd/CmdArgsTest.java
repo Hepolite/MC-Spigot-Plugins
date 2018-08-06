@@ -30,11 +30,11 @@ class CmdArgsTest extends BaseTest
 
 		assertEquals("Hello", argsA.consume());
 		assertEquals("World", argsA.consume());
-		assertThrows(CmdProcessException.class, () -> argsA.consume());
+		assertThrows(CmdExecutionException.class, () -> argsA.consume());
 
 		assertArrayEquals(strings("This", "is", "a"), argsB.consume(3));
 		assertArrayEquals(strings("test"), argsB.consume(1));
-		assertThrows(CmdProcessException.class, () -> argsB.consume());
+		assertThrows(CmdExecutionException.class, () -> argsB.consume());
 	}
 
 	@Test

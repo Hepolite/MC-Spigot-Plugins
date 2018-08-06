@@ -26,7 +26,7 @@ public final class CmdArgParserString implements ICmdArgParser
 		private final String input;
 
 		private int index = 0;
-		private char separator = '\0';
+		private char separator = ' ';
 
 		public Worker(final String input)
 		{
@@ -78,9 +78,6 @@ public final class CmdArgParserString implements ICmdArgParser
 				this.separator = separator;
 				return findStart(index + 1);
 			}
-			// Otherwise we can assume this is the first argument of the input
-			else if (this.separator == '\0')
-				this.separator = ' ';
 			return index;
 		}
 		/**
@@ -93,7 +90,6 @@ public final class CmdArgParserString implements ICmdArgParser
 		public int findEnd(final int index)
 		{
 			final int end = input.indexOf(separator, index);
-			separator = '\0';
 			return end == -1 ? input.length() : end;
 		}
 	}

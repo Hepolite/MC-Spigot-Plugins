@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 import com.hepolite.kineticore.cmd.CmdArgs;
+import com.hepolite.kineticore.cmd.CmdParseException;
 
 public final class CmdArgParserString implements ICmdArgParser
 {

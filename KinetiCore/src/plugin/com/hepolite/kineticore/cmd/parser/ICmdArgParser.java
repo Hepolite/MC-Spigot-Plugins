@@ -1,6 +1,7 @@
 package com.hepolite.kineticore.cmd.parser;
 
 import com.hepolite.kineticore.cmd.CmdArgs;
+import com.hepolite.kineticore.cmd.CmdParseException;
 
 public interface ICmdArgParser
 {

@@ -1,4 +1,4 @@
-package com.hepolite.kineticore.cmd.parser;
+package com.hepolite.kineticore.cmd;
 
 public class CmdParseException extends RuntimeException
 {

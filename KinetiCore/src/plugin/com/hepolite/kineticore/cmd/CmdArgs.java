@@ -42,9 +42,9 @@ public final class CmdArgs
 	 * form and should be processed before actually being used in a command.
 	 * 
 	 * @return The raw argument
-	 * @throws CmdExecutionException If there were no more arguments
+	 * @throws CmdParseException If there were no more arguments
 	 */
-	public String consume() throws CmdExecutionException
+	public String consume() throws CmdParseException
 	{
 		return consume(1)[0];
 	}
@@ -55,9 +55,9 @@ public final class CmdArgs
 	 * 
 	 * @param count The number of arguments to consume
 	 * @return The raw arguments
-	 * @throws CmdExecutionException If there were not enough arguments
+	 * @throws CmdParseException If there were not enough arguments
 	 */
-	public String[] consume(final int count) throws CmdExecutionException
+	public String[] consume(final int count) throws CmdParseException
 	{
 		if (size() < index + count)
 			throw new CmdExecutionException(

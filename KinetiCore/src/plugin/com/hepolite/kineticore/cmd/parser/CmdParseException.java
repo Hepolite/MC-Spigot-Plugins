@@ -1,6 +1,6 @@
 package com.hepolite.kineticore.cmd.parser;
 
-public class CommandParseException extends RuntimeException
+public class CmdParseException extends RuntimeException
 {
 	/**
 	 * Auto-generated serial version
@@ -9,11 +9,11 @@ public class CommandParseException extends RuntimeException
 
 	// ...
 
-	public CommandParseException()
+	public CmdParseException()
 	{
 		super();
 	}
-	public CommandParseException(final String message)
+	public CmdParseException(final String message)
 	{
 		super(message);
 	}

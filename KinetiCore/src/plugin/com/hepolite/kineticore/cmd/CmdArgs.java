@@ -12,6 +12,11 @@ public final class CmdArgs
 	{
 		this.arguments.addAll(arguments);
 	}
+	public CmdArgs(final String... arguments)
+	{
+		for (final String arg : arguments)
+			this.arguments.add(arg);
+	}
 
 	// ...
 
@@ -37,9 +42,9 @@ public final class CmdArgs
 	 * form and should be processed before actually being used in a command.
 	 * 
 	 * @return The raw argument
-	 * @throws CommandProcessException If there were no more arguments
+	 * @throws CmdProcessException If there were no more arguments
 	 */
-	public String consume() throws CommandProcessException
+	public String consume() throws CmdProcessException
 	{
 		return consume(1)[0];
 	}
@@ -50,12 +55,12 @@ public final class CmdArgs
 	 * 
 	 * @param count The number of arguments to consume
 	 * @return The raw arguments
-	 * @throws CommandProcessException If there were not enough arguments
+	 * @throws CmdProcessException If there were not enough arguments
 	 */
-	public String[] consume(final int count) throws CommandProcessException
+	public String[] consume(final int count) throws CmdProcessException
 	{
 		if (size() < index + count)
-			throw new CommandProcessException(
+			throw new CmdProcessException(
 				String.format("Attempting to extract %d arguments, %d remains",
 					count, size()));
 

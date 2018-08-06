@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class StringConverterTest
+class StringConverterTest extends BaseTest
 {
 	@Test
 	void testToBool()
@@ -120,40 +120,5 @@ class StringConverterTest
 	{
 		assertArrayEquals(strings("Hello", "World", "!"),
 			StringConverter.toStrings("Hello World !", " "));
-	}
-
-	// ...
-
-	boolean[] bools(final boolean... values)
-	{
-		return values;
-	}
-	byte[] bytes(final byte... values)
-	{
-		return values;
-	}
-	double[] doubles(final double... values)
-	{
-		return values;
-	}
-	float[] floats(final float... values)
-	{
-		return values;
-	}
-	int[] ints(final int... values)
-	{
-		return values;
-	}
-	long[] longs(final long... values)
-	{
-		return values;
-	}
-	short[] shorts(final short... values)
-	{
-		return values;
-	}
-	String[] strings(final String... values)
-	{
-		return values;
 	}
 }

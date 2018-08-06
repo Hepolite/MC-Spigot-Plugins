@@ -2,6 +2,11 @@ package com.hepolite.kineticore.util;
 
 public abstract class BaseTest
 {
+	@SuppressWarnings("unchecked")
+	protected final <T> T[] generics(final T... values)
+	{
+		return values;
+	}
 	protected final boolean[] bools(final boolean... values)
 	{
 		return values;

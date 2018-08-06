@@ -11,8 +11,15 @@ public interface ICmd
 	 * 
 	 * @return The overall structure of the command
 	 */
-	ICmdElement[] getStructure();
+	ICmdElement getStructure();
 
+	/**
+	 * Generates the name of the command. The user must specify this name to
+	 * execute the command.
+	 * 
+	 * @return The name of the command
+	 */
+	String getName();
 	/**
 	 * Generates a description explaining what the command will do when
 	 * executed.

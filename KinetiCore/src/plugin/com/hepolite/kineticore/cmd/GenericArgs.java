@@ -1,7 +1,9 @@
 package com.hepolite.kineticore.cmd;
 
 import com.hepolite.kineticore.cmd.elements.CmdElementBool;
+import com.hepolite.kineticore.cmd.elements.CmdElementChildren;
 import com.hepolite.kineticore.cmd.elements.CmdElementFirst;
+import com.hepolite.kineticore.cmd.elements.CmdElementNone;
 import com.hepolite.kineticore.cmd.elements.CmdElementNumber;
 import com.hepolite.kineticore.cmd.elements.CmdElementOptional;
 import com.hepolite.kineticore.cmd.elements.CmdElementSequence;
@@ -11,7 +13,30 @@ import com.hepolite.kineticore.cmd.elements.ICmdElement;
 public final class GenericArgs
 {
 	/**
-	 * Consumes one of a series of arguments. Only the first valid is used.
+	 * Specifies that there should be no elements
+	 * 
+	 * @return The element to match the input
+	 */
+	public final static ICmdElement none()
+	{
+		return new CmdElementNone();
+	}
+
+	/**
+	 * Consumes a series of arguments. Usages is the matching child's elements
+	 * concatenated.
+	 * 
+	 * @param children The sub-commands to register
+	 * @return The element to match the input
+	 */
+	public final static ICmdElement children(final ICmd... children)
+	{
+		return new CmdElementChildren(children);
+	}
+
+	/**
+	 * Consumes one of the argument. Only the first valid is used, the rest are
+	 * ignored.
 	 * 
 	 * @param elements The elements to choose from
 	 * @return The element to match the input

@@ -32,7 +32,7 @@ public final class CmdArgs
 	 */
 	public boolean empty()
 	{
-		return arguments.isEmpty();
+		return size() == 0;
 	}
 
 	// ...

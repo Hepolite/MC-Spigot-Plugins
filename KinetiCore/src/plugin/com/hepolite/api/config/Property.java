@@ -1,5 +1,7 @@
 package com.hepolite.api.config;
 
+import java.io.File;
+
 public final class Property implements IProperty
 {
 	private final String path;
@@ -20,6 +22,10 @@ public final class Property implements IProperty
 	{
 		this(root.isEmpty() ? name : root + "." + name);
 	}
+	public Property(final File file)
+	{
+		this(getPathFromFile(file));
+	}
 
 	private static String getRootFromPath(final String path)
 	{
@@ -30,6 +36,18 @@ public final class Property implements IProperty
 	{
 		final int index = path.lastIndexOf('.');
 		return index == -1 ? path : path.substring(index + 1);
+	}
+	private static String getPathFromFile(final File file)
+	{
+		String path = file.getPath();
+
+		// Remove file extension, if any (be super-aggressive and kill all .'s)
+		final int index = path.indexOf('.');
+		if (index != -1)
+			path = path.substring(0, index);
+
+		// Must escape \ in the regex, thus \\ twice
+		return path.replaceAll("/", ".").replaceAll("\\\\", ".");
 	}
 
 	// ...
@@ -48,6 +66,16 @@ public final class Property implements IProperty
 	public String name()
 	{
 		return name;
+	}
+	@Override
+	public File file(final String extension)
+	{
+		if (name().isEmpty())
+			throw new IllegalArgumentException("Property must specify a name");
+
+		final String path = root().replaceAll("\\.", "/");
+		final String name = name() + "." + extension;
+		return path.isEmpty() ? new File(name) : new File(path, name);
 	}
 
 	@Override

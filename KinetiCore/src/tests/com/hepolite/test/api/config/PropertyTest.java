@@ -2,6 +2,8 @@ package com.hepolite.test.api.config;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
+
 import org.junit.jupiter.api.Test;
 
 import com.hepolite.api.config.IProperty;
@@ -37,6 +39,26 @@ class PropertyTest
 		test(propertyA, "", "", "");
 		test(propertyB, "name", "", "name");
 		test(propertyC, "root.name", "root", "name");
+	}
+	@Test
+	void testFileCtor()
+	{
+		final IProperty propertyA = new Property(new File("name.yml"));
+		final IProperty propertyB = new Property(new File("folder/file.yml"));
+		final IProperty propertyC = new Property(new File("root", "name.yml"));
+
+		test(propertyA, "name", "", "name");
+		test(propertyB, "folder.file", "folder", "file");
+		test(propertyC, "root.name", "root", "name");
+	}
+
+	@Test
+	void testFile()
+	{
+		final IProperty property = new Property("some.property.path");
+
+		assertEquals("some\\property\\path.yml",
+			property.file("yml").getPath());
 	}
 
 	@Test

@@ -29,20 +29,14 @@ public final class Config implements IConfig
 		this.file = null;
 		this.config = new YamlConfiguration();
 	}
-	public Config(final IProperty property)
+	public Config(final File file)
 	{
-		this.file = getFileFromProperty(property);
+		this.file = file;
 		this.config = YamlConfiguration.loadConfiguration(file);
 	}
-
-	private static File getFileFromProperty(final IProperty property)
+	public Config(final IProperty property)
 	{
-		if (property.name().isEmpty())
-			throw new IllegalArgumentException("Property must specify a name");
-
-		final String path = property.root().replaceAll("\\.", "/");
-		final String name = property.name() + ".yml";
-		return path.isEmpty() ? new File(name) : new File(path, name);
+		this(property.file("yml"));
 	}
 
 	// ...

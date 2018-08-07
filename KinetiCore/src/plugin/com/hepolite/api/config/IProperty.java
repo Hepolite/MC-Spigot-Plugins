@@ -1,5 +1,7 @@
 package com.hepolite.api.config;
 
+import java.io.File;
+
 public interface IProperty
 {
 	/**
@@ -21,6 +23,13 @@ public interface IProperty
 	 * @return The name of the property
 	 */
 	String name();
+	/**
+	 * Represents the property as a file
+	 * 
+	 * @param extension The extension of the file
+	 * @return The file of the property
+	 */
+	File file(String extension);
 
 	/**
 	 * Retrieves the parent of the property, if one exists. If no parent is

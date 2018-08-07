@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.hepolite.api.attribute.AttributeDatabase;
 import com.hepolite.api.config.Property;
+import com.hepolite.kineticore.database.Database;
 
 public final class KinetiCore extends JavaPlugin
 {

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import com.hepolite.api.user.IUser;
 import com.hepolite.api.user.UserConsole;
-import com.hepolite.kineticore.Database;
+import com.hepolite.kineticore.database.Database;
 
 class DatabaseTest
 {
@@ -45,7 +45,7 @@ class DatabaseTest
 	{
 		handler.data.put(user, "Hello World!");
 		database.save(user);
-		handler.data.remove(user);
+		handler.clear();
 
 		assertNotEquals("Hello World!", handler.data.get(user));
 		database.load(user);
@@ -57,7 +57,7 @@ class DatabaseTest
 		database.load(user);
 		handler.data.put(user, "Hello World!");
 		database.save();
-		handler.data.remove(user);
+		handler.clear();
 
 		assertNotEquals("Hello World!", handler.data.get(user));
 		database.load(user);

@@ -1,4 +1,4 @@
-package com.hepolite.kineticore;
+package com.hepolite.kineticore.database;
 
 import java.util.HashMap;
 import java.util.Map;

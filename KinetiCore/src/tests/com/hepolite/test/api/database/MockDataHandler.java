@@ -23,4 +23,10 @@ public class MockDataHandler implements IDataHandler
 	{
 		data.put(user, config.getString(property));
 	}
+
+	@Override
+	public void clear()
+	{
+		data.clear();
+	}
 }

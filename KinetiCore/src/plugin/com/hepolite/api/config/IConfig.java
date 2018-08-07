@@ -307,4 +307,6 @@ public interface IConfig
 	 * @return The values stored in the configuration
 	 */
 	String[] getStrings(IProperty property, String... def);
+
+	<T extends IValue> T getValue(IProperty property, T value);
 }

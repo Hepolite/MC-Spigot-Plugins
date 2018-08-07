@@ -27,12 +27,12 @@ public final class Config implements IConfig
 	public Config()
 	{
 		this.file = null;
-		clear();
+		this.config = new YamlConfiguration();
 	}
 	public Config(final IProperty property)
 	{
 		this.file = getFileFromProperty(property);
-		load();
+		this.config = YamlConfiguration.loadConfiguration(file);
 	}
 
 	private static File getFileFromProperty(final IProperty property)
@@ -55,6 +55,9 @@ public final class Config implements IConfig
 	@Override
 	public void save()
 	{
+		if (file == null)
+			return;
+
 		final File root = file.getParentFile();
 		if (root != null && root.isDirectory())
 			root.mkdirs();
@@ -69,7 +72,7 @@ public final class Config implements IConfig
 	@Override
 	public void load()
 	{
-		if (file != null)
+		if (exists())
 			config = YamlConfiguration.loadConfiguration(file);
 	}
 	@Override
@@ -95,24 +98,31 @@ public final class Config implements IConfig
 	@Override
 	public void set(final IProperty property, Object value)
 	{
-		if (value instanceof boolean[])
-			value = Booleans.asList((boolean[]) value);
-		else if (value instanceof byte[])
-			value = Bytes.asList((byte[]) value);
-		else if (value instanceof double[])
-			value = Doubles.asList((double[]) value);
-		else if (value instanceof float[])
-			value = Floats.asList((float[]) value);
-		else if (value instanceof int[])
-			value = Ints.asList((int[]) value);
-		else if (value instanceof long[])
-			value = Longs.asList((long[]) value);
-		else if (value instanceof short[])
-			value = Shorts.asList((short[]) value);
-		else if (value instanceof String[])
-			value = Arrays.asList((String[]) value);
-
-		config.set(property.path(), value);
+		if (value instanceof IValue)
+		{
+			remove(property);
+			((IValue) value).save(this, property);
+		}
+		else
+		{
+			if (value instanceof boolean[])
+				value = Booleans.asList((boolean[]) value);
+			else if (value instanceof byte[])
+				value = Bytes.asList((byte[]) value);
+			else if (value instanceof double[])
+				value = Doubles.asList((double[]) value);
+			else if (value instanceof float[])
+				value = Floats.asList((float[]) value);
+			else if (value instanceof int[])
+				value = Ints.asList((int[]) value);
+			else if (value instanceof long[])
+				value = Longs.asList((long[]) value);
+			else if (value instanceof short[])
+				value = Shorts.asList((short[]) value);
+			else if (value instanceof String[])
+				value = Arrays.asList((String[]) value);
+			config.set(property.path(), value);
+		}
 	}
 
 	@Override
@@ -279,5 +289,13 @@ public final class Config implements IConfig
 	{
 		final List<String> values = config.getStringList(property.path());
 		return values.isEmpty() ? def : values.toArray(new String[0]);
+	}
+
+	@Override
+	public <T extends IValue> T getValue(final IProperty property,
+		final T value)
+	{
+		value.load(this, property);
+		return value;
 	}
 }

@@ -223,4 +223,17 @@ class ConfigTest extends BaseTest
 		assertEquals(value, config.getString(property.child("one")));
 		assertArrayEquals(values, config.getStrings(property.child("many")));
 	}
+
+	@Test
+	void testGetValue()
+	{
+		final MockValue value = new MockValue(42, "Hello World!");
+
+		final IConfig config = new Config();
+		config.set(property.child("test"), 4);
+		config.set(property, value);
+
+		assertEquals(value, config.getValue(property, new MockValue()));
+		assertFalse(config.has(property.child("test")));
+	}
 }

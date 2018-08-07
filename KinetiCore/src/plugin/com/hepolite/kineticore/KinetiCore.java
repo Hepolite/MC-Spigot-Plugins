@@ -6,25 +6,70 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.hepolite.api.attribute.AttributeDatabase;
 import com.hepolite.api.config.Property;
+import com.hepolite.api.event.Handler;
 import com.hepolite.kineticore.database.Database;
+import com.hepolite.kineticore.database.DatabaseHandler;
 
 public final class KinetiCore extends JavaPlugin
 {
+	private static KinetiCore INSTANCE;
+	private final Handler handler = new Handler(this);
+
 	private final Database database = new Database();
-	private final AttributeDatabase attribute = new AttributeDatabase();
+	private final AttributeDatabase attributes = new AttributeDatabase();
+
+	// ...
+
+	/**
+	 * Register a custom user data handler only in the plugin initialization
+	 * method. Make sure the plugin initialization order is such that KinetiCore
+	 * initializes first.
+	 * 
+	 * @return The database instance
+	 */
+	public static Database getDatabase()
+	{
+		return INSTANCE.database;
+	}
+	/**
+	 * @return The attributes database instance
+	 */
+	public static AttributeDatabase getAttributes()
+	{
+		return INSTANCE.attributes;
+	}
+
+	// ...
+
+	public static final void INFO(final String msg)
+	{
+		if (INSTANCE != null)
+			INSTANCE.getLogger().info(msg);
+	}
+	public static final void WARN(final String msg)
+	{
+		if (INSTANCE != null)
+			INSTANCE.getLogger().warning(msg);
+	}
+	public static final void FATAL(final String msg)
+	{
+		if (INSTANCE != null)
+			INSTANCE.getLogger().severe("!!FATAL!! " + msg);
+	}
 
 	// ...
 
 	@Override
 	public void onEnable()
 	{
+		INSTANCE = this;
+
+		// Set up utilities
 		database.setDataFolder(new Property(getDataFolder()).child("users"));
-		database.register("attribute", attribute);
-	}
-	@Override
-	public void onDisable()
-	{
-		database.save();
+		database.register("attributes", attributes);
+
+		// Ensure sub-systems are ready to roll
+		handler.register(new DatabaseHandler(this, database));
 	}
 
 	@Override

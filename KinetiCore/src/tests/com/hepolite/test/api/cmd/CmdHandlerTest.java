@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
 
 import com.hepolite.api.cmd.CmdHandler;
-import com.hepolite.api.user.ConsoleUser;
+import com.hepolite.api.user.UserConsole;
 
 class CmdHandlerTest
 {
@@ -16,7 +16,7 @@ class CmdHandlerTest
 
 		final CmdHandler handler = new CmdHandler();
 		handler.register(mock);
-		handler.execute(new ConsoleUser(), "foo", "");
+		handler.execute(new UserConsole(), "foo", "");
 
 		assertTrue(mock.executed);
 	}

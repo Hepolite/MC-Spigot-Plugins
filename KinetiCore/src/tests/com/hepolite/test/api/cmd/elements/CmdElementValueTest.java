@@ -8,7 +8,7 @@ import com.hepolite.api.cmd.CmdArgs;
 import com.hepolite.api.cmd.CmdContext;
 import com.hepolite.api.cmd.CmdParseException;
 import com.hepolite.api.cmd.elements.CmdElementValue;
-import com.hepolite.api.user.ConsoleUser;
+import com.hepolite.api.user.UserConsole;
 import com.hepolite.api.user.IUser;
 
 class CmdElementValueTest
@@ -33,7 +33,7 @@ class CmdElementValueTest
 	@Test
 	void testParse()
 	{
-		final IUser user = new ConsoleUser();
+		final IUser user = new UserConsole();
 		final CmdArgs args = new CmdArgs("foo", "bar");
 		final CmdContext context = new CmdContext();
 

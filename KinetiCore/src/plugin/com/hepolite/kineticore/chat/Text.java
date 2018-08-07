@@ -2,12 +2,14 @@ package com.hepolite.kineticore.chat;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.TranslatableComponent;
 
 public final class Text
 {
@@ -64,9 +66,40 @@ public final class Text
 		return this;
 	}
 
+	/**
+	 * Translates all underlying fields using the specified values
+	 *
+	 * @return The same base text, for convenience
+	 */
+	public Text translate(final Object... values)
+	{
+		final List<BaseComponent> translations = new ArrayList<>();
+		for (final Object value : values)
+			if (value instanceof Text)
+				translations.add(((Text) value).base);
+			else if (value instanceof BaseComponent)
+				translations.add((BaseComponent) value);
+			else
+				translations.add(new TextComponent(value.toString()));
+
+		translate(base, translations);
+		return this;
+	}
+	private void translate(final TranslatableComponent component,
+		final List<BaseComponent> translations)
+	{
+		component.setWith(translations);
+
+		if (component.getExtra() != null)
+			component.getExtra().forEach(extra -> {
+				if (extra instanceof TranslatableComponent)
+					translate((TranslatableComponent) extra, translations);
+			});
+	}
+
 	// ...
 
-	private TextComponent base;
+	private TranslatableComponent base;
 
 	private final Collection<Format> formats = new ArrayList<>();
 	private Color color = Color.WHITE;
@@ -76,7 +109,8 @@ public final class Text
 		for (final Object object : data)
 			if (object instanceof String)
 			{
-				final TextComponent text = new TextComponent((String) object);
+				final TranslatableComponent text = new TranslatableComponent(
+					(String) object);
 				applyColor(text);
 				applyFormat(text);
 
@@ -97,11 +131,11 @@ public final class Text
 
 	// ...
 
-	private void applyColor(final TextComponent component)
+	private void applyColor(final BaseComponent component)
 	{
 		component.setColor(color.get());
 	}
-	private void applyFormat(final TextComponent component)
+	private void applyFormat(final BaseComponent component)
 	{
 		for (final Format format : formats)
 			switch (format)

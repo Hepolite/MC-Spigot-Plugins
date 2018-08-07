@@ -55,4 +55,13 @@ class TextTest
 		assertEquals("§fCommand", textB.toString());
 		assertEquals("§fLink", textC.toString());
 	}
+
+	@Test
+	void testTranslate()
+	{
+		final Text text = Text.of("%1$d %3$s ", "%2$d");
+
+		assertEquals("§f1§f §fA§f §f2", text.translate(1, 2, "A").toString());
+		assertEquals("§f4§f §fB§f §f5", text.translate(4, 5, "B").toString());
+	}
 }

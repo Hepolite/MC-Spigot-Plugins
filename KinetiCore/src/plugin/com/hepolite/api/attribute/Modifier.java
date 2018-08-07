@@ -1,6 +1,10 @@
 package com.hepolite.api.attribute;
 
-public final class Modifier
+import com.hepolite.api.config.IConfig;
+import com.hepolite.api.config.IProperty;
+import com.hepolite.api.config.IValue;
+
+public final class Modifier implements IValue
 {
 	/**
 	 * Constructs a new modifier that modifies the base attribute value by a
@@ -54,9 +58,9 @@ public final class Modifier
 
 	// ...
 
-	public final float scale;
-	public final float constant;
-	public final float multiplier;
+	public float scale;
+	public float constant;
+	public float multiplier;
 
 	private Modifier(final float scale, final float constant,
 		final float multiplier)
@@ -64,5 +68,22 @@ public final class Modifier
 		this.scale = scale;
 		this.constant = constant;
 		this.multiplier = multiplier;
+	}
+
+	// ...
+
+	@Override
+	public void save(final IConfig config, final IProperty property)
+	{
+		config.set(property.child("scale"), scale);
+		config.set(property.child("constant"), constant);
+		config.set(property.child("multiplier"), multiplier);
+	}
+	@Override
+	public void load(final IConfig config, final IProperty property)
+	{
+		scale = config.getFloat(property.child("scale"));
+		constant = config.getFloat(property.child("constant"));
+		multiplier = config.getFloat(property.child("multiplier"));
 	}
 }

@@ -3,7 +3,11 @@ package com.hepolite.api.attribute;
 import java.util.Collections;
 import java.util.Set;
 
-public final class Attribute
+import com.hepolite.api.config.IConfig;
+import com.hepolite.api.config.IProperty;
+import com.hepolite.api.config.IValue;
+
+public final class Attribute implements IValue
 {
 	private final ModifierMap modifiers = new ModifierMap();
 
@@ -156,5 +160,25 @@ public final class Attribute
 	public void removeModifier(final String key)
 	{
 		modifiers.remove(key);
+	}
+
+	// ...
+
+	@Override
+	public void save(final IConfig config, final IProperty property)
+	{
+		config.set(property.child("base"), base);
+		config.set(property.child("min"), min);
+		config.set(property.child("max"), max);
+		config.set(property.child("modifiers"), modifiers);
+	}
+
+	@Override
+	public void load(final IConfig config, final IProperty property)
+	{
+		base = config.getFloat(property.child("base"));
+		min = config.getFloat(property.child("min"));
+		max = config.getFloat(property.child("max"));
+		config.getValue(property.child("modifiers"), modifiers);
 	}
 }

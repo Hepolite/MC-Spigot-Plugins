@@ -23,12 +23,6 @@ public final class UserConsole extends User
 		return "CONSOLE";
 	}
 
-	@Override
-	public boolean isOnline()
-	{
-		return true;
-	}
-
 	// ...
 
 	@Override

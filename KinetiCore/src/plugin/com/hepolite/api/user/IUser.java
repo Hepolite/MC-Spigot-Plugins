@@ -22,13 +22,6 @@ public interface IUser
 	 */
 	String getName();
 
-	/**
-	 * Checks if the user is online on the server right now.
-	 * 
-	 * @return True iff the user is online
-	 */
-	boolean isOnline();
-
 	// ...
 
 	/**

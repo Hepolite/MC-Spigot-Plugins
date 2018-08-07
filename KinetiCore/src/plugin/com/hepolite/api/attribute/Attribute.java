@@ -172,7 +172,6 @@ public final class Attribute implements IValue
 		config.set(property.child("max"), max);
 		config.set(property.child("modifiers"), modifiers);
 	}
-
 	@Override
 	public void load(final IConfig config, final IProperty property)
 	{

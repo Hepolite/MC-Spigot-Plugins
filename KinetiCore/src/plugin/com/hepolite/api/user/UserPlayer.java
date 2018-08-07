@@ -31,12 +31,6 @@ public class UserPlayer extends User
 		return player.isPresent() ? player.get().getDisplayName() : "UNKNOWN";
 	}
 
-	@Override
-	public boolean isOnline()
-	{
-		return getPlayer().isPresent();
-	}
-
 	// ...
 
 	@Override

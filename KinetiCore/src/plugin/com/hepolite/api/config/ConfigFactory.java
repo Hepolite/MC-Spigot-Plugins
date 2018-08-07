@@ -24,8 +24,23 @@ public final class ConfigFactory
 	public static IConfig create(final JavaPlugin plugin, final IProperty path)
 	{
 		copy(plugin, path);
+		return get(plugin, path);
+	}
+	/**
+	 * Constructs a new configuration, linked to the provided plugin and path.
+	 * The root location on disk is the plugin data directory. The filepath to
+	 * the configuration on disk is the provided path.
+	 * 
+	 * @param plugin The plugin owning the config to be created
+	 * @param path The path to the config, relative to the plugin data directory
+	 * @return The new configuration instance
+	 */
+	public static IConfig get(final JavaPlugin plugin, final IProperty path)
+	{
 		return new Config(getTarget(plugin, path));
 	}
+
+	// ...
 
 	private static void copy(final JavaPlugin plugin, final IProperty path)
 	{
@@ -69,8 +84,6 @@ public final class ConfigFactory
 			e.printStackTrace();
 		}
 	}
-
-	// ...
 
 	private static File getSource(final IProperty path)
 	{

@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import com.hepolite.api.cmd.CmdArgs;
-import com.hepolite.api.cmd.CmdExecutionException;
 import com.hepolite.api.cmd.CmdArgs.Snapshot;
+import com.hepolite.api.cmd.CmdParseException;
 import com.hepolite.test.api.util.BaseTest;
 
 class CmdArgsTest extends BaseTest
@@ -37,11 +37,11 @@ class CmdArgsTest extends BaseTest
 
 		assertEquals("Hello", argsA.consume());
 		assertEquals("World", argsA.consume());
-		assertThrows(CmdExecutionException.class, () -> argsA.consume());
+		assertThrows(CmdParseException.class, () -> argsA.consume());
 
 		assertArrayEquals(strings("This", "is", "a"), argsB.consume(3));
 		assertArrayEquals(strings("test"), argsB.consume(1));
-		assertThrows(CmdExecutionException.class, () -> argsB.consume());
+		assertThrows(CmdParseException.class, () -> argsB.consume());
 	}
 
 	@Test

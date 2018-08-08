@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import com.hepolite.api.cmd.CmdArgs;
 import com.hepolite.api.cmd.parser.CmdArgParserString;
-import com.hepolite.api.cmd.parser.ICmdArgParser;
 import com.hepolite.api.cmd.parser.CmdArgParserString.Worker;
+import com.hepolite.api.cmd.parser.ICmdArgParser;
 import com.hepolite.test.api.util.BaseTest;
 
 class CmdArgParserStringTest extends BaseTest
@@ -16,10 +16,11 @@ class CmdArgParserStringTest extends BaseTest
 	void testParse()
 	{
 		final ICmdArgParser parser = new CmdArgParserString();
-		final CmdArgs args = parser.parse("\"Hello World\" whatever foo \"!\"");
+		final CmdArgs argsA = parser.parse("\"W Hi\" foo bar \"!\"");
+		final CmdArgs argsB = parser.parse("Testing 1 2 3");
 
-		assertArrayEquals(strings("Hello World", "whatever", "foo", "!"),
-			args.consume(4));
+		assertArrayEquals(strings("W Hi", "foo", "bar", "!"), argsA.consume(4));
+		assertArrayEquals(strings("Testing", "1", "2", "3"), argsB.consume(4));
 	}
 
 	// ...

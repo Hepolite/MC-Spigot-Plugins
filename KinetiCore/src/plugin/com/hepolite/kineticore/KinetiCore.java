@@ -5,9 +5,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.hepolite.api.attribute.AttributeDatabase;
+import com.hepolite.api.cmd.CmdDispatcher;
+import com.hepolite.api.cmd.CmdHandler;
 import com.hepolite.api.config.Property;
 import com.hepolite.api.event.Handler;
 import com.hepolite.kineticore.attribute.Attributes;
+import com.hepolite.kineticore.cmd.CmdDebug;
 import com.hepolite.kineticore.database.Database;
 import com.hepolite.kineticore.database.DatabaseHandler;
 
@@ -15,6 +18,7 @@ public final class KinetiCore extends JavaPlugin
 {
 	private static KinetiCore INSTANCE;
 	private final Handler handler = new Handler(this);
+	private final CmdHandler commands = new CmdHandler();
 
 	private final Database database = new Database();
 	private final AttributeDatabase attributes = new AttributeDatabase();
@@ -66,6 +70,8 @@ public final class KinetiCore extends JavaPlugin
 		INSTANCE = this;
 
 		// Set up utilities
+		commands.register(new CmdDebug());
+
 		database.setDataFolder(new Property(getDataFolder()).child("users"));
 		database.register("attributes", attributes);
 
@@ -78,6 +84,6 @@ public final class KinetiCore extends JavaPlugin
 	public boolean onCommand(final CommandSender sender, final Command command,
 		final String label, final String[] args)
 	{
-		return false;
+		return CmdDispatcher.dispatch(sender, commands, args);
 	}
 }

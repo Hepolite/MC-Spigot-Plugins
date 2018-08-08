@@ -1,8 +1,8 @@
 package com.hepolite.test.api.cmd;
 
+import com.hepolite.api.chat.Text;
 import com.hepolite.api.cmd.CmdContext;
 import com.hepolite.api.cmd.CmdExecutionException;
-import com.hepolite.api.cmd.GenericArgs;
 import com.hepolite.api.cmd.ICmd;
 import com.hepolite.api.cmd.elements.ICmdElement;
 import com.hepolite.api.user.IUser;
@@ -10,12 +10,14 @@ import com.hepolite.api.user.IUser;
 public class MockCmd implements ICmd
 {
 	private final String name;
+	private final ICmdElement structure;
 
 	public boolean executed = false;
 
-	public MockCmd(final String name)
+	public MockCmd(final String name, final ICmdElement structure)
 	{
 		this.name = name;
+		this.structure = structure;
 	}
 
 	// ...
@@ -23,7 +25,7 @@ public class MockCmd implements ICmd
 	@Override
 	public ICmdElement getStructure()
 	{
-		return GenericArgs.none();
+		return structure;
 	}
 
 	@Override
@@ -32,14 +34,14 @@ public class MockCmd implements ICmd
 		return name;
 	}
 	@Override
-	public String getDescription()
+	public Text getDescription()
 	{
-		return "";
+		return Text.of("");
 	}
 	@Override
-	public String getHelp()
+	public Text getHelp()
 	{
-		return "";
+		return Text.of("");
 	}
 
 	@Override

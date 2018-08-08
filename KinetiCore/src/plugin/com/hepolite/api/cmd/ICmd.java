@@ -1,18 +1,11 @@
 package com.hepolite.api.cmd;
 
+import com.hepolite.api.chat.Text;
 import com.hepolite.api.cmd.elements.ICmdElement;
 import com.hepolite.api.user.IUser;
 
 public interface ICmd
 {
-	/**
-	 * Generates the overall structure of the command. This determines whether
-	 * there are any child commands and arguments, as well as the order.
-	 * 
-	 * @return The overall structure of the command
-	 */
-	ICmdElement getStructure();
-
 	/**
 	 * Generates the name of the command. The user must specify this name to
 	 * execute the command.
@@ -26,13 +19,23 @@ public interface ICmd
 	 * 
 	 * @return The description of the command
 	 */
-	String getDescription();
+	Text getDescription();
 	/**
 	 * Generates a help section, which explains how the command should be used.
 	 * 
 	 * @return The help section of the command
 	 */
-	String getHelp();
+	Text getHelp();
+
+	// ...
+
+	/**
+	 * Generates the overall structure of the command. This determines whether
+	 * there are any child commands and arguments, as well as the order.
+	 * 
+	 * @return The overall structure of the command
+	 */
+	ICmdElement getStructure();
 
 	/**
 	 * Performs the command logic, the actual command implementation.

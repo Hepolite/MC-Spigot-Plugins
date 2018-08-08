@@ -28,6 +28,18 @@ public final class AttributeDatabase implements IDataHandler
 		attributes.put(key, attribute);
 	}
 
+	/**
+	 * Retrieves the attribute with the given key under the given user.
+	 * 
+	 * @param user The user to look at
+	 * @param key The key to look under
+	 * @return The attribute for the player at the given key
+	 */
+	public Attribute get(final IUser user, final String key)
+	{
+		return data.get(user).get(key);
+	}
+
 	// ...
 
 	@Override

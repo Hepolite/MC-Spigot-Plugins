@@ -60,7 +60,7 @@ public final class CmdArgs
 	public String[] consume(final int count) throws CmdParseException
 	{
 		if (size() < count)
-			throw new CmdExecutionException(String.format(
+			throw new CmdParseException(String.format(
 				"Attempting to extract %d argument(s), %d remains", count,
 				size()));
 

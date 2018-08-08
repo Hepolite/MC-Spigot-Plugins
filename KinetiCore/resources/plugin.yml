@@ -6,6 +6,7 @@ description: Provides the basic functionality used in other plugins
 
 commands:
   kineticore:
+    aliases: [kc]
     description: The base entry point to all KinetiCore commands
     usage: /kineticore <arguments>
     permission: kineticore

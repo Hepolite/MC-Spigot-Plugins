@@ -52,7 +52,7 @@ public final class CmdArgParserString implements ICmdArgParser
 			final int end = findEnd(begin);
 			index = end;
 
-			if (begin == input.length() || end == input.length())
+			if (begin == input.length() && end == input.length())
 				return Optional.empty();
 			return Optional.of(input.substring(begin, end));
 		}

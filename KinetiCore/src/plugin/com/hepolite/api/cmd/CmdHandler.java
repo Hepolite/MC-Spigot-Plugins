@@ -4,6 +4,8 @@ import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import com.hepolite.api.chat.Color;
+import com.hepolite.api.chat.Text;
 import com.hepolite.api.cmd.parser.CmdArgParserString;
 import com.hepolite.api.cmd.parser.ICmdArgParser;
 import com.hepolite.api.user.IUser;
@@ -50,7 +52,11 @@ public final class CmdHandler
 	{
 		final Entry<ICmd, ICmdArgParser> entry = cmds.get(name.toLowerCase());
 		if (entry == null)
-			return; // TODO: Give message to user, saying invalid cmd
+		{
+			user.sendMessage(Text.of(Color.RED,
+				String.format("Invalid command '%s'", name)));
+			return;
+		}
 
 		final ICmd cmd = entry.getKey();
 		final ICmdArgParser parser = entry.getValue();
@@ -59,20 +65,24 @@ public final class CmdHandler
 		try
 		{
 			cmd.getStructure().parse(user, parser.parse(input), context);
+			cmd.execute(user, context);
 		}
 		catch (final CmdParseException e)
 		{
-			// TODO: Give message to user, saying invalid input
+			user.sendMessage(Text.of(Color.RED,
+				String.format("Invalid input: %s", e.getMessage())));
 			return;
-		}
-
-		try
-		{
-			cmd.execute(user, context);
 		}
 		catch (final CmdExecutionException e)
 		{
-			// TODO: Give message to user, saying problem executing command
+			user.sendMessage(Text.of(Color.RED,
+				String.format("Error executing command: %s", e.getMessage())));
+		}
+		catch (final Exception e)
+		{
+			user.sendMessage(Text.of(Color.RED,
+				"Unexpected error has occurred! See console for details"));
+			e.printStackTrace();
 		}
 	}
 }

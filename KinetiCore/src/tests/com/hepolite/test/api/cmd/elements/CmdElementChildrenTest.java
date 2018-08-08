@@ -8,8 +8,8 @@ import com.hepolite.api.cmd.CmdArgs;
 import com.hepolite.api.cmd.CmdContext;
 import com.hepolite.api.cmd.GenericArgs;
 import com.hepolite.api.cmd.elements.ICmdElement;
-import com.hepolite.api.user.UserConsole;
 import com.hepolite.api.user.IUser;
+import com.hepolite.api.user.UserConsole;
 import com.hepolite.test.api.cmd.MockCmd;
 
 class CmdElementChildrenTest
@@ -17,8 +17,8 @@ class CmdElementChildrenTest
 	@Test
 	void testParse()
 	{
-		final MockCmd mockA = new MockCmd("foo");
-		final MockCmd mockB = new MockCmd("bar");
+		final MockCmd mockA = new MockCmd("foo", GenericArgs.none());
+		final MockCmd mockB = new MockCmd("bar", GenericArgs.none());
 
 		final IUser user = new UserConsole();
 		final CmdArgs args = new CmdArgs("bar");

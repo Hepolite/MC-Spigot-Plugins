@@ -37,7 +37,10 @@ public final class AttributeDatabase implements IDataHandler
 	 */
 	public Attribute get(final IUser user, final String key)
 	{
-		return data.get(user).get(key);
+		final AttributeMap map = data.get(user);
+		if (map == null || !map.containsKey(key))
+			return new Attribute();
+		return map.get(key);
 	}
 
 	// ...

@@ -49,6 +49,15 @@ class TextTest
 	}
 
 	@Test
+	void testAppend()
+	{
+		final Text textA = Text.of(Format.BOLD, "World!");
+		final Text textB = Text.of(Color.AQUA, "Hello ").append(textA);
+
+		assertEquals("§bHello §f§lWorld!", textB.toString());
+	}
+
+	@Test
 	void testSpecialText()
 	{
 		final Text textA = Text.of("Hover").hover(Text.of(Color.AQUA, "Hover"));

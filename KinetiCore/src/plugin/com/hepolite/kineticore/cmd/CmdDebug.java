@@ -8,7 +8,7 @@ import com.hepolite.api.cmd.ICmd;
 import com.hepolite.api.cmd.elements.ICmdElement;
 import com.hepolite.api.user.IUser;
 
-public class CmdDebug implements ICmd
+public final class CmdDebug implements ICmd
 {
 	@Override
 	public String getName()
@@ -31,7 +31,7 @@ public class CmdDebug implements ICmd
 	@Override
 	public ICmdElement getStructure()
 	{
-		return GenericArgs.none();
+		return GenericArgs.children(new CmdDebugAttribute());
 	}
 
 	@Override

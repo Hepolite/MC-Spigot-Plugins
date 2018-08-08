@@ -28,6 +28,18 @@ public final class Text
 	}
 
 	/**
+	 * Appends the text instance to the end of this text instance.
+	 * 
+	 * @param text The text to append
+	 * @return The same base text, for convenience
+	 */
+	public Text append(final Text text)
+	{
+		base.addExtra(text.base);
+		return this;
+	}
+
+	/**
 	 * Assigns the text that should be displayed when the user hovers the mouse
 	 * over the base text.
 	 * 

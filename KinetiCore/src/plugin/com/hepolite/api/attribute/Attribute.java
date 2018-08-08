@@ -17,6 +17,16 @@ public final class Attribute implements IValue
 
 	public Attribute()
 	{}
+	public Attribute(final float base)
+	{
+		this.base = base;
+	}
+	public Attribute(final float base, final float min, final float max)
+	{
+		this.base = base;
+		this.min = min;
+		this.max = max;
+	}
 
 	// ...
 
@@ -24,10 +34,12 @@ public final class Attribute implements IValue
 	 * Sets the base value of the attribute.
 	 * 
 	 * @param value The new base value
+	 * @return The same attribute for convenience
 	 */
-	public void setBase(final float value)
+	public Attribute setBase(final float value)
 	{
 		this.base = value;
+		return this;
 	}
 	/**
 	 * Sets the smallest value possible for the attribute. If the new value is
@@ -35,11 +47,13 @@ public final class Attribute implements IValue
 	 * to the new value.
 	 * 
 	 * @param value The new minimum value
+	 * @return The same attribute for convenience
 	 */
-	public void setMin(final float value)
+	public Attribute setMin(final float value)
 	{
 		this.min = value;
 		this.max = Math.max(min, max);
+		return this;
 	}
 	/**
 	 * Sets the largest value possible for the attribute. If the new value is
@@ -47,11 +61,13 @@ public final class Attribute implements IValue
 	 * set to the new value.
 	 * 
 	 * @param value The new maximum value
+	 * @return The same attribute for convenience
 	 */
-	public void setMax(final float value)
+	public Attribute setMax(final float value)
 	{
 		this.max = value;
 		this.min = Math.min(min, max);
+		return this;
 	}
 
 	/**
@@ -168,16 +184,12 @@ public final class Attribute implements IValue
 	public void save(final IConfig config, final IProperty property)
 	{
 		config.set(property.child("base"), base);
-		config.set(property.child("min"), min);
-		config.set(property.child("max"), max);
 		config.set(property.child("modifiers"), modifiers);
 	}
 	@Override
 	public void load(final IConfig config, final IProperty property)
 	{
 		base = config.getFloat(property.child("base"));
-		min = config.getFloat(property.child("min"));
-		max = config.getFloat(property.child("max"));
 		config.getValue(property.child("modifiers"), modifiers);
 	}
 }

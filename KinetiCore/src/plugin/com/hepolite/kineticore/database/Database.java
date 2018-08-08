@@ -9,7 +9,6 @@ import com.hepolite.api.config.IProperty;
 import com.hepolite.api.config.Property;
 import com.hepolite.api.database.IDataHandler;
 import com.hepolite.api.user.IUser;
-import com.hepolite.kineticore.KinetiCore;
 
 public final class Database
 {
@@ -92,9 +91,6 @@ public final class Database
 	 */
 	public void erase(final IUser user)
 	{
-		KinetiCore
-			.WARN(String.format("Erasing all config data for '%s'!", user));
-
 		handlers.values().forEach(handler -> handler.clear());
 		getConfigForUser(user).delete();
 		data.remove(user);
@@ -106,9 +102,6 @@ public final class Database
 	{
 		if (data.containsKey(user))
 			return data.get(user);
-
-		KinetiCore.INFO(
-			String.format("Found no data for '%s', creating config...", user));
 
 		final IProperty path = dataFolder.child(user.getUUID().toString());
 		final IConfig config = new Config(path);

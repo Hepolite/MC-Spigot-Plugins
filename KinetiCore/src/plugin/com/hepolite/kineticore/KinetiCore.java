@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.hepolite.api.attribute.AttributeDatabase;
 import com.hepolite.api.config.Property;
 import com.hepolite.api.event.Handler;
+import com.hepolite.kineticore.attribute.Attributes;
 import com.hepolite.kineticore.database.Database;
 import com.hepolite.kineticore.database.DatabaseHandler;
 
@@ -69,6 +70,7 @@ public final class KinetiCore extends JavaPlugin
 		database.register("attributes", attributes);
 
 		// Ensure sub-systems are ready to roll
+		handler.register(new Attributes(this, attributes));
 		handler.register(new DatabaseHandler(this, database));
 	}
 

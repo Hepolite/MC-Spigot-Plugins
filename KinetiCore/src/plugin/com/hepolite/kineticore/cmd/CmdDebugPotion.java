@@ -43,11 +43,8 @@ public final class CmdDebugPotion implements ICmd
 			GenericArgs.potionType("type"),
 			GenericArgs.optional(GenericArgs.time("duration")),
 			GenericArgs.optional(GenericArgs.intNum("level")),
-			GenericArgs.optional(GenericArgs.sequence(
-				GenericArgs.bool("ambient"),
-				GenericArgs.bool("particles"),
-				GenericArgs.bool("icon")
-			))
+			GenericArgs.optional(GenericArgs.bool("ambient")),
+			GenericArgs.optional(GenericArgs.bool("particles"))
 		);
 		/// @formatter:on
 	}
@@ -58,10 +55,9 @@ public final class CmdDebugPotion implements ICmd
 		final Potion potion = new Potion();
 		final Effect effect = potion.add(context.get("type", PotionType.SPEED));
 		effect.duration = context.get("duration", Time.fromInstant());
-		effect.level = context.get("level", 1);
+		effect.level = context.get("level", 0);
 		effect.ambient = context.get("ambient", false);
 		effect.particles = context.get("particles", true);
-		effect.icon = context.get("icon", true);
 
 		final Player player = Bukkit.getPlayer(user.getUUID());
 		potion.apply(player);

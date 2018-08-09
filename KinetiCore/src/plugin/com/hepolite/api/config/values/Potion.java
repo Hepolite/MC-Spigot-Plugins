@@ -79,7 +79,7 @@ public final class Potion implements IValue
 	// ...
 
 	/**
-	 * Applies the potino to all specified targets.
+	 * Applies the potion to all specified targets.
 	 * 
 	 * @param targets The targets to apply the potion to
 	 */
@@ -91,7 +91,7 @@ public final class Potion implements IValue
 			final int level = effect.level < 0 ? effect.level
 				: effect.level - 1;
 			final PotionEffect potion = new PotionEffect(type.get(), duration,
-				level, effect.ambient, effect.particles, effect.icon);
+				level, effect.ambient, effect.particles);
 
 			// Apply effect to all applicable targets
 			for (final LivingEntity target : targets)
@@ -129,7 +129,6 @@ public final class Potion implements IValue
 		public Time duration = Time.fromInstant();
 		public boolean ambient = false;
 		public boolean particles = true;
-		public boolean icon = true;
 		public float chance = 1.0f;
 
 		// ...
@@ -154,11 +153,6 @@ public final class Potion implements IValue
 			this.particles = particles;
 			return this;
 		}
-		public Effect icon(final boolean icon)
-		{
-			this.icon = icon;
-			return this;
-		}
 		public Effect chance(final float chance)
 		{
 			this.chance = chance;
@@ -172,7 +166,6 @@ public final class Potion implements IValue
 			config.set(property.child("duration"), duration);
 			config.set(property.child("ambient"), ambient);
 			config.set(property.child("particles"), particles);
-			config.set(property.child("icon"), icon);
 			config.set(property.child("chance"), chance);
 		}
 		@Override
@@ -182,7 +175,6 @@ public final class Potion implements IValue
 			duration = config.getValue(property.child("duration"), new Time());
 			ambient = config.getBool(property.child("ambient"));
 			particles = config.getBool(property.child("particles"), true);
-			icon = config.getBool(property.child("icon"), true);
 			chance = config.getFloat(property.child("chance"), 1.0f);
 		}
 	}

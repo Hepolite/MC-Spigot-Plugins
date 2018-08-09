@@ -2,6 +2,7 @@ package com.hepolite.api.cmd;
 
 import com.hepolite.api.cmd.elements.CmdElementBool;
 import com.hepolite.api.cmd.elements.CmdElementChildren;
+import com.hepolite.api.cmd.elements.CmdElementEnum;
 import com.hepolite.api.cmd.elements.CmdElementFirst;
 import com.hepolite.api.cmd.elements.CmdElementNone;
 import com.hepolite.api.cmd.elements.CmdElementNumber;
@@ -9,6 +10,7 @@ import com.hepolite.api.cmd.elements.CmdElementOptional;
 import com.hepolite.api.cmd.elements.CmdElementSequence;
 import com.hepolite.api.cmd.elements.CmdElementString;
 import com.hepolite.api.cmd.elements.ICmdElement;
+import com.hepolite.api.config.values.PotionType;
 
 public final class GenericArgs
 {
@@ -172,5 +174,17 @@ public final class GenericArgs
 	public final static ICmdElement remainder(final String key)
 	{
 		return new CmdElementString.Remaining(key);
+	}
+
+	/**
+	 * Requires and argument to be a potion type.
+	 * 
+	 * @param key The key to store the value under
+	 * @return The element to match the input
+	 */
+	public final static ICmdElement potionType(final String key)
+	{
+		return new CmdElementEnum<>(key, PotionType::valueOf,
+			"Expected a potion type, but '%s' was not");
 	}
 }

@@ -1,6 +1,7 @@
 package com.hepolite.api.config;
 
 import java.util.Set;
+import java.util.function.Function;
 
 public interface IConfig
 {
@@ -308,5 +309,38 @@ public interface IConfig
 	 */
 	String[] getStrings(IProperty property, String... def);
 
+	// ...
+
+	/**
+	 * Retrieves an enum value from the configuration, under the given property.
+	 * If the property does not exist, the default value {@code null} is
+	 * returned.
+	 * 
+	 * @param property The property to read from
+	 * @param parser The converter function, which converts a string to an enum.
+	 *            This should usually be T::valueOf
+	 * @return The value stored in the configuration
+	 */
+	<T extends Enum<T>> T getEnum(IProperty property,
+		Function<String, T> parser);
+	/**
+	 * Retrieves an enum value from the configuration, under the given property.
+	 * If the property does not exist, the default value is returned.
+	 * 
+	 * @param property The property to read from
+	 * @param parser The converter function, which converts a string to an enum.
+	 *            This should usually be T::valueOf
+	 * @return The value stored in the configuration
+	 */
+	<T extends Enum<T>> T getEnum(IProperty property, T def,
+		Function<String, T> parser);
+
+	/**
+	 * Prompts the input value to load itself from the configuration.
+	 * 
+	 * @param property The property to read from
+	 * @param value The input value to load up
+	 * @return The same value as passed in
+	 */
 	<T extends IValue> T getValue(IProperty property, T value);
 }

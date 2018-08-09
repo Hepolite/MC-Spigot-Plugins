@@ -220,10 +220,12 @@ public enum PotionType
 
 	; // ...
 
-	private final PotionEffectType type;
-	private final boolean duration;
-	private final boolean amplifier;
+	private PotionEffectType type;
+	private boolean duration;
+	private boolean amplifier;
 
+	private PotionType()
+	{}
 	private PotionType(final PotionEffectType type, final boolean duration,
 		final boolean amplifier)
 	{
@@ -243,5 +245,13 @@ public enum PotionType
 	public boolean hasAmplifier()
 	{
 		return amplifier;
+	}
+
+	// ...
+
+	@Override
+	public String toString()
+	{
+		return name().toLowerCase();
 	}
 }

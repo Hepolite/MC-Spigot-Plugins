@@ -180,7 +180,7 @@ public final class Time implements IValue
 	/**
 	 * Constructs a time of zero duration
 	 */
-	private Time()
+	public Time()
 	{
 		this(0L);
 	}
@@ -189,7 +189,7 @@ public final class Time implements IValue
 	 * 
 	 * @param time The time, measured in ticks
 	 */
-	private Time(final long time)
+	public Time(final long time)
 	{
 		this.time = time;
 	}
@@ -352,5 +352,12 @@ public final class Time implements IValue
 		if (builder.length() == 0)
 			builder.append("0t ");
 		return builder.substring(0, builder.length() - 1);
+	}
+	@Override
+	public boolean equals(final Object other)
+	{
+		if (other instanceof Time)
+			return time == ((Time) other).time;
+		return false;
 	}
 }

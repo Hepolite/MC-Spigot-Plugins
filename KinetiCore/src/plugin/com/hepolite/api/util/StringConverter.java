@@ -447,4 +447,37 @@ public final class StringConverter
 	{
 		return string.split(regex);
 	}
+
+	// ...
+
+	/**
+	 * Converts the given string to an enum value, if possible. If the string
+	 * could not be converted, the default value {@code null} is returned.
+	 * 
+	 * @param string The string to convert to an enum value
+	 * @param converter The function which converts the string to an enum value,
+	 *            usually T::valueOf
+	 * @return The string value of the enum or the default value
+	 */
+	public static <T extends Enum<T>> T toEnum(final String string,
+		final Function<String, T> converter)
+	{
+		return toEnum(string, null, converter);
+	}
+	/**
+	 * Converts the given string to an enum value, if possible. If the string
+	 * could not be converted, the default value is returned.
+	 * 
+	 * @param string The string to convert to an enum value
+	 * @param def The default value if the string could not be converted
+	 * @param converter The function which converts the string to an enum value,
+	 *            usually T::valueOf
+	 * @return The enum value of the string or the default value
+	 */
+	public static <T extends Enum<T>> T toEnum(final String string, final T def,
+		final Function<String, T> converter)
+	{
+		return toGeneric(string.replaceAll(" ", "_").toUpperCase(), def,
+			converter);
+	}
 }

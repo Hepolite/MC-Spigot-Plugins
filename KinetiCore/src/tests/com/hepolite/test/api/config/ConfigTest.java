@@ -113,8 +113,8 @@ class ConfigTest extends BaseTest
 
 		assertTrue(config.properties().contains(property));
 		final Set<IProperty> properties = config.properties(property);
-		assertTrue(properties.contains(new Property("A")));
-		assertTrue(properties.contains(new Property("B")));
+		assertTrue(properties.contains(property.child("A")));
+		assertTrue(properties.contains(property.child("B")));
 	}
 
 	// ...
@@ -224,6 +224,18 @@ class ConfigTest extends BaseTest
 		assertArrayEquals(values, config.getStrings(property.child("many")));
 	}
 
+	@Test
+	void testGetEnum()
+	{
+		final IConfig config = new Config();
+		config.set(property.child("foo"), MockEnum.FOO);
+		config.set(property.child("bar"), MockEnum.BAR);
+
+		assertEquals(MockEnum.FOO,
+			config.getEnum(property.child("foo"), MockEnum::valueOf));
+		assertEquals(MockEnum.BAR,
+			config.getEnum(property.child("bar"), MockEnum::valueOf));
+	}
 	@Test
 	void testGetValue()
 	{

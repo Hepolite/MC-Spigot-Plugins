@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -18,6 +19,7 @@ import com.google.common.primitives.Floats;
 import com.google.common.primitives.Ints;
 import com.google.common.primitives.Longs;
 import com.google.common.primitives.Shorts;
+import com.hepolite.kineticore.KinetiCore;
 
 public final class Config implements IConfig
 {
@@ -143,7 +145,7 @@ public final class Config implements IConfig
 			: config.getConfigurationSection(property.path());
 
 		if (section != null)
-			section.getKeys(false).forEach(key -> set.add(new Property(key)));
+			section.getKeys(false).forEach(key -> set.add(property.child(key)));
 		return set;
 	}
 
@@ -285,11 +287,43 @@ public final class Config implements IConfig
 		return values.isEmpty() ? def : values.toArray(new String[0]);
 	}
 
+	// ...
+
+	@Override
+	public <T extends Enum<T>> T getEnum(final IProperty property,
+		final Function<String, T> parser)
+	{
+		return getEnum(property, null, parser);
+	}
+	@Override
+	public <T extends Enum<T>> T getEnum(final IProperty property, final T def,
+		final Function<String, T> parser)
+	{
+		final String value = getString(property);
+		try
+		{
+			return parser.apply(value);
+		}
+		catch (final Exception e)
+		{
+			KinetiCore.WARN(String.format("Could not parse enum '%s' under 's'",
+				value, property));
+			return def;
+		}
+	}
 	@Override
 	public <T extends IValue> T getValue(final IProperty property,
 		final T value)
 	{
-		value.load(this, property);
+		try
+		{
+			value.load(this, property);
+		}
+		catch (final Exception e)
+		{
+			KinetiCore.WARN(String.format(
+				"Could not parse value '%s' under 's'", value, property));
+		}
 		return value;
 	}
 }

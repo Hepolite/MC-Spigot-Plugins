@@ -80,7 +80,7 @@ public final class Sounds implements IValue
 			this.sound = sound;
 			return this;
 		}
-		public Component time(final Time delay)
+		public Component delay(final Time delay)
 		{
 			this.delay = delay;
 			return this;
@@ -98,9 +98,19 @@ public final class Sounds implements IValue
 
 		@Override
 		public void save(final IConfig config, final IProperty property)
-		{}
+		{
+			config.set(property.child("sound"), sound.toString().toLowerCase());
+			config.set(property.child("delay"), delay);
+			config.set(property.child("volume"), volume);
+			config.set(property.child("pitch"), pitch);
+		}
 		@Override
 		public void load(final IConfig config, final IProperty property)
-		{}
+		{
+			sound = config.getEnum(property.child("sound"), Sound::valueOf);
+			delay = config.getValue(property.child("delay"), delay);
+			volume = config.getFloat(property.child("volume"), 1.0f);
+			pitch = config.getFloat(property.child("pitch"), 1.0f);
+		}
 	}
 }

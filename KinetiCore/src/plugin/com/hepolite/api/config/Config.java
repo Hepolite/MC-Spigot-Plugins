@@ -299,10 +299,10 @@ public final class Config implements IConfig
 	public <T extends Enum<T>> T getEnum(final IProperty property, final T def,
 		final Function<String, T> parser)
 	{
-		final String value = getString(property);
+		final String value = getString(property).replaceAll(" ", "_");
 		try
 		{
-			return parser.apply(value);
+			return parser.apply(value.toUpperCase());
 		}
 		catch (final Exception e)
 		{

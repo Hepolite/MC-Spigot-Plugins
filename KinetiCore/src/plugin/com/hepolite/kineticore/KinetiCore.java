@@ -13,15 +13,18 @@ import com.hepolite.kineticore.attribute.Attributes;
 import com.hepolite.kineticore.cmd.CmdDebug;
 import com.hepolite.kineticore.database.Database;
 import com.hepolite.kineticore.database.DatabaseHandler;
+import com.hepolite.kineticore.sound.SoundsHandler;
 
 public final class KinetiCore extends JavaPlugin
 {
 	private static KinetiCore INSTANCE;
-	private final Handler handler = new Handler(this);
-	private final CmdHandler commands = new CmdHandler();
 
 	private final Database database = new Database();
 	private final AttributeDatabase attributes = new AttributeDatabase();
+
+	private final Handler handler = new Handler(this);
+	private final CmdHandler commands = new CmdHandler();
+	private final SoundsHandler sounds = new SoundsHandler(this);
 
 	// ...
 
@@ -42,6 +45,13 @@ public final class KinetiCore extends JavaPlugin
 	public static AttributeDatabase getAttributes()
 	{
 		return INSTANCE.attributes;
+	}
+	/**
+	 * @return The sounds handler instance
+	 */
+	public static SoundsHandler getSounds()
+	{
+		return INSTANCE.sounds;
 	}
 
 	// ...
@@ -76,6 +86,7 @@ public final class KinetiCore extends JavaPlugin
 		database.register("attributes", attributes);
 
 		// Ensure sub-systems are ready to roll
+		handler.register(sounds);
 		handler.register(new Attributes(this, attributes));
 		handler.register(new DatabaseHandler(this, database));
 	}

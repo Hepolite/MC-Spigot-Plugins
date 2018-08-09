@@ -1,12 +1,12 @@
 package com.hepolite.api.attribute;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 
 import com.hepolite.api.config.IConfig;
 import com.hepolite.api.config.IProperty;
 import com.hepolite.api.config.IValue;
 
-public class ModifierMap extends HashMap<String, Modifier> implements IValue
+public class ModifierMap extends TreeMap<String, Modifier> implements IValue
 {
 	private static final long serialVersionUID = -940484661927511634L;
 

@@ -32,20 +32,45 @@ public final class CmdDebugAttribute implements ICmd
 
 	// ...
 
+	public static final String KEY_ATTRIBUTE = "attribute";
+	public static final String KEY_MODIFIER = "modifier";
+	public static final String KEY_MULTIPLIER = "multiplier";
+	public static final String KEY_SCALE = "scale";
+	public static final String KEY_CONSANT = "constant";
+
 	@Override
 	public ICmdElement getStructure()
 	{
-		return GenericArgs.sequence(GenericArgs.string("name"));
+		/// @formatter:off
+		return GenericArgs.sequence(
+			GenericArgs.string(KEY_ATTRIBUTE),
+			GenericArgs.optional(GenericArgs.sequence(
+				GenericArgs.string(KEY_MODIFIER),
+				GenericArgs.floatNum(KEY_MULTIPLIER),
+				GenericArgs.floatNum(KEY_SCALE),
+				GenericArgs.floatNum(KEY_CONSANT)
+			))
+		);
+		/// @formatter:on
 	}
 
 	@Override
 	public void execute(final IUser user, final CmdContext context)
 		throws CmdExecutionException
 	{
-		final String name = context.get("name", "");
-		final Attribute attr = KinetiCore.getAttributes().get(user, name);
+		final String attr = context.get(KEY_ATTRIBUTE, "");
+		final String modi = context.get(KEY_MODIFIER, "");
+		final float mult = context.get(KEY_MULTIPLIER, 0.0f);
+		final float scal = context.get(KEY_SCALE, 0.0f);
+		final float cons = context.get(KEY_CONSANT, 0.0f);
 
-		user.sendMessage(attribute(name, attr));
+		final Attribute attribute = KinetiCore.getAttributes().get(user, attr);
+		if (mult == 0.0f && scal == 0.0f && cons == 0.0f)
+			attribute.removeModifier(modi);
+		else
+			attribute.setModifier(modi, Modifier.from(scal, cons, mult));
+
+		user.sendMessage(attribute(attr, attribute));
 	}
 
 	// ...
@@ -54,10 +79,10 @@ public final class CmdDebugAttribute implements ICmd
 	{
 		// Convert attribute data to strings
 		final String name = String.format("'%s'", key);
-		final String data = String.format("%.2f / %.2f", attribute.getBase(),
+		final String data = String.format("%.3f / %.3f", attribute.getBase(),
 			attribute.getTotal());
-		final String min = String.format("%.2f", attribute.getMin());
-		final String max = String.format("%.2f", attribute.getMax());
+		final String min = String.format("%.3f", attribute.getMin());
+		final String max = String.format("%.3f", attribute.getMax());
 
 		// Start constructing the attribute text
 		final Text text = Text.of(Color.AQUA, "Attribute ", Color.BLUE, name,
@@ -89,12 +114,12 @@ public final class CmdDebugAttribute implements ICmd
 	{
 		// Convert modifier data to strings
 		final String name = String.format("'%s'", key);
-		final String data = String.format("%.0f%%%% / %.0f%%%% | %.2f",
+		final String data = String.format("%.0f%%%% / %.0f%%%% | %.3f",
 			100.0f * modifier.multiplier, 100.0f * modifier.scale,
 			modifier.constant);
 
 		// Construct modifier text
 		return Text.of(Color.AQUA, "Modifier ", Color.BLUE, name, Color.AQUA,
-			" (multiplier/scale | constant): ", Color.BLUE, data);
+			" (multiplier/scale | constant): ", Color.BLUE, data, "\n");
 	}
 }

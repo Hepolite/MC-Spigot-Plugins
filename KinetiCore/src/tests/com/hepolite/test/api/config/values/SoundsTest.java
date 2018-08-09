@@ -10,12 +10,13 @@ import com.hepolite.api.config.Config;
 import com.hepolite.api.config.IConfig;
 import com.hepolite.api.config.IProperty;
 import com.hepolite.api.config.Property;
+import com.hepolite.api.config.values.Sounds;
 import com.hepolite.api.config.values.Sounds.Component;
 import com.hepolite.api.unit.Time;
 
 class SoundsTest
 {
-	private static final IConfig config = new Config();
+	private static final IConfig config = new Config(new Property("test"));
 	private static final IProperty property = new Property("property");
 
 	@BeforeEach
@@ -25,9 +26,49 @@ class SoundsTest
 	}
 
 	@Test
-	void test()
+	void testUpdate()
 	{
-		fail("Not yet implemented");
+		final Sounds soundA = new Sounds();
+		final Sounds soundB = new Sounds();
+		soundB.add().delay(Time.fromTicks(5));
+		soundB.add().delay(Time.fromTicks(8));
+
+		assertTrue(soundA.done(0));
+		assertFalse(soundB.done(0));
+		assertFalse(soundB.done(7));
+		assertTrue(soundB.done(8));
+	}
+
+	@Test
+	void testSave()
+	{
+		final Sounds sounds = new Sounds(0.8f);
+		sounds.add().sound(Sound.AMBIENT_CAVE).volume(0.25f);
+		sounds.add().sound(Sound.MUSIC_CREDITS).delay(Time.fromSeconds(6));
+		config.set(property, sounds);
+
+		assertEquals(0.8f, sounds.volume);
+		final IProperty soundA = property.child("Sound 1");
+		assertEquals("ambient_cave", config.getString(soundA.child("sound")));
+		assertEquals(0.25f, config.getFloat(soundA.child("volume")));
+		final IProperty soundB = property.child("Sound 2");
+		assertEquals("music_credits", config.getString(soundB.child("sound")));
+		assertEquals("6s", config.getString(soundB.child("delay")));
+	}
+	@Test
+	void testLoad()
+	{
+		config.set(property.child("volume"), 4.5f);
+		final IProperty soundA = property.child("Whatever");
+		config.set(soundA.child("sound"), "AMBIENT underwater_exit");
+		config.set(soundA.child("pitch"), 1.2f);
+		final IProperty soundB = property.child("Other sound");
+		config.set(soundB.child("sound"), "weather_rain");
+		config.set(soundB.child("volume"), 3.5f);
+
+		final Sounds sounds = config.getValue(property, new Sounds());
+		assertEquals(4.5f, sounds.volume);
+		assertEquals(2, sounds.size());
 	}
 
 	static class ComponentTest

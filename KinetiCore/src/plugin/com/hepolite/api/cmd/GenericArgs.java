@@ -9,6 +9,7 @@ import com.hepolite.api.cmd.elements.CmdElementNumber;
 import com.hepolite.api.cmd.elements.CmdElementOptional;
 import com.hepolite.api.cmd.elements.CmdElementSequence;
 import com.hepolite.api.cmd.elements.CmdElementString;
+import com.hepolite.api.cmd.elements.CmdElementTime;
 import com.hepolite.api.cmd.elements.ICmdElement;
 import com.hepolite.api.config.values.PotionType;
 
@@ -175,6 +176,19 @@ public final class GenericArgs
 	{
 		return new CmdElementString.Remaining(key);
 	}
+
+	/**
+	 * Requires an argument to be a time.
+	 * 
+	 * @param key The key to store the value under
+	 * @return The element to match the input
+	 */
+	public final static ICmdElement time(final String key)
+	{
+		return new CmdElementTime(key);
+	}
+
+	// ...
 
 	/**
 	 * Requires and argument to be a potion type.

@@ -1,7 +1,11 @@
 package com.hepolite.api.config.values;
 
 import java.util.Map;
+import java.util.Random;
 import java.util.TreeMap;
+
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.potion.PotionEffect;
 
 import com.hepolite.api.config.IConfig;
 import com.hepolite.api.config.IProperty;
@@ -11,6 +15,8 @@ import com.hepolite.api.util.StringConverter;
 
 public final class Potion implements IValue
 {
+	private static final Random random = new Random();
+
 	private final Map<PotionType, Effect> effects = new TreeMap<>();
 	public float chance;
 
@@ -72,6 +78,30 @@ public final class Potion implements IValue
 
 	// ...
 
+	/**
+	 * Applies the potino to all specified targets.
+	 * 
+	 * @param targets The targets to apply the potion to
+	 */
+	public void apply(final LivingEntity... targets)
+	{
+		effects.forEach((type, effect) -> {
+			// Construct actual potion effect
+			final int duration = (int) effect.duration.asTicks();
+			final int level = effect.level < 0 ? effect.level
+				: effect.level - 1;
+			final PotionEffect potion = new PotionEffect(type.get(), duration,
+				level, effect.ambient, effect.particles, effect.icon);
+
+			// Apply effect to all applicable targets
+			for (final LivingEntity target : targets)
+				if (random.nextFloat() < chance * effect.chance)
+					target.addPotionEffect(potion, true);
+		});
+	}
+
+	// ...
+
 	@Override
 	public void save(final IConfig config, final IProperty property)
 	{
@@ -95,42 +125,41 @@ public final class Potion implements IValue
 
 	public static final class Effect implements IValue
 	{
-		public int level;
-		public Time duration;
-		public boolean ambient;
-		public float chance;
-
-		public Effect()
-		{
-			this(1, Time.fromInstant(), false, 1.0f);
-		}
-		public Effect(final int level, final Time duration,
-			final boolean ambient, final float chance)
-		{
-			this.level = level;
-			this.duration = duration;
-			this.ambient = ambient;
-			this.chance = chance;
-		}
+		public int level = 1;
+		public Time duration = Time.fromInstant();
+		public boolean ambient = false;
+		public boolean particles = true;
+		public boolean icon = true;
+		public float chance = 1.0f;
 
 		// ...
 
-		public Effect setLevel(final int level)
+		public Effect level(final int level)
 		{
 			this.level = level;
 			return this;
 		}
-		public Effect setDuration(final Time duration)
+		public Effect duration(final Time duration)
 		{
 			this.duration = duration;
 			return this;
 		}
-		public Effect setAmbient(final boolean ambient)
+		public Effect ambient(final boolean ambient)
 		{
 			this.ambient = ambient;
 			return this;
 		}
-		public Effect setChance(final float chance)
+		public Effect particles(final boolean particles)
+		{
+			this.particles = particles;
+			return this;
+		}
+		public Effect icon(final boolean icon)
+		{
+			this.icon = icon;
+			return this;
+		}
+		public Effect chance(final float chance)
 		{
 			this.chance = chance;
 			return this;
@@ -142,6 +171,8 @@ public final class Potion implements IValue
 			config.set(property.child("level"), level);
 			config.set(property.child("duration"), duration);
 			config.set(property.child("ambient"), ambient);
+			config.set(property.child("particles"), particles);
+			config.set(property.child("icon"), icon);
 			config.set(property.child("chance"), chance);
 		}
 		@Override
@@ -150,6 +181,8 @@ public final class Potion implements IValue
 			level = config.getInt(property.child("level"));
 			duration = config.getValue(property.child("duration"), new Time());
 			ambient = config.getBool(property.child("ambient"));
+			particles = config.getBool(property.child("particles"), true);
+			icon = config.getBool(property.child("icon"), true);
 			chance = config.getFloat(property.child("chance"), 1.0f);
 		}
 	}

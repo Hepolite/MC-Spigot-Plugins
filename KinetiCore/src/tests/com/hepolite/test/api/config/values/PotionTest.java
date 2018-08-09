@@ -49,8 +49,8 @@ class PotionTest
 	void testSave()
 	{
 		final Potion potion = new Potion(0.75f);
-		potion.add(PotionType.SPEED).setDuration(Time.fromMinutes(10));
-		potion.add(PotionType.INSTANT_HEALTH).setLevel(2);
+		potion.add(PotionType.SPEED).duration(Time.fromMinutes(10));
+		potion.add(PotionType.INSTANT_HEALTH).level(2);
 		config.set(property, potion);
 
 		assertEquals(0.75f, config.getFloat(property.child("chance")));
@@ -89,7 +89,8 @@ class PotionTest
 		@Test
 		void testSave()
 		{
-			final Effect effect = new Effect(2, Time.fromTicks(15), true, 0.4f);
+			final Effect effect = new Effect().level(2)
+				.duration(Time.fromTicks(15)).ambient(true).chance(0.4f);
 			config.set(property, effect);
 
 			assertEquals(2, config.getInt(property.child("level")));

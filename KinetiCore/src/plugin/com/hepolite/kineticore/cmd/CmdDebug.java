@@ -31,7 +31,12 @@ public final class CmdDebug implements ICmd
 	@Override
 	public ICmdElement getStructure()
 	{
-		return GenericArgs.children(new CmdDebugAttribute());
+		/// @formatter:off
+		return GenericArgs.children(
+			new CmdDebugAttribute(),
+			new CmdDebugPotion()
+		);
+		/// @formatter:on
 	}
 
 	@Override

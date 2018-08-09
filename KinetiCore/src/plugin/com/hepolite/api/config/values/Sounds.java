@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import com.hepolite.api.config.IConfig;
@@ -122,7 +123,19 @@ public final class Sounds implements IValue
 	 */
 	public void play(final Location location, final Player... players)
 	{
-		KinetiCore.getSounds().play(this, location, players);
+		KinetiCore.getSounds().play(location, this, players);
+	}
+	/**
+	 * Plays the sound from a specific entity, while only the specified players
+	 * can hear it. If no players are specified, all players will be able to
+	 * hear the sound.
+	 * 
+	 * @param entity The entity the sound is played from
+	 * @param players The players that should hear the sound
+	 */
+	public void play(final Entity entity, final Player... players)
+	{
+		KinetiCore.getSounds().play(entity, this, players);
 	}
 
 	// ...

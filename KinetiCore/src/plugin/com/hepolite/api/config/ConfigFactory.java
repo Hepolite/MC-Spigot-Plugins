@@ -58,8 +58,8 @@ public final class ConfigFactory
 		final InputStream stream = plugin.getResource(actualSource);
 		if (stream == null)
 		{
-			plugin.getLogger().warning(String
-				.format("Could not find config resource '%s' (%s)!", path));
+			plugin.getLogger().warning(
+				String.format("Could not find config resource '%s'!", path));
 			return;
 		}
 

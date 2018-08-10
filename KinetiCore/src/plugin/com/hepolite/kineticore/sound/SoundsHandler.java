@@ -14,7 +14,7 @@ import com.hepolite.api.event.Handler;
 public final class SoundsHandler extends Handler
 {
 	private final ArrayList<Entry> entries = new ArrayList<>();
-	private int currentTick = 0;
+	private int tick = 0;
 
 	public SoundsHandler(final JavaPlugin plugin)
 	{
@@ -24,14 +24,12 @@ public final class SoundsHandler extends Handler
 	@Override
 	public void onTick(final int tick)
 	{
-		currentTick = tick;
-
 		final Collection<Integer> toRemove = new ArrayList<>();
 		for (int i = 0; i < entries.size(); ++i)
 		{
 			final Entry entry = entries.get(i);
 
-			final int currentTick = tick - entry.start;
+			final int currentTick = this.tick - entry.start;
 			Location location = entry.location;
 			if (entry.source != null && entry.source.isValid())
 				location = entry.source.getLocation();
@@ -46,6 +44,7 @@ public final class SoundsHandler extends Handler
 				entries.set(index, entries.get(last));
 			entries.remove(last);
 		});
+		this.tick = tick;
 	}
 
 	// ...
@@ -59,7 +58,7 @@ public final class SoundsHandler extends Handler
 	 */
 	public void play(final Sounds sound, final Player... players)
 	{
-		entries.add(new Entry(null, null, currentTick, sound, players));
+		entries.add(new Entry(null, null, tick, sound, players));
 	}
 	/**
 	 * Plays the sound from the specified location, while only the specified
@@ -73,7 +72,7 @@ public final class SoundsHandler extends Handler
 	public void playAt(final Sounds sound, final Location location,
 		final Player... players)
 	{
-		entries.add(new Entry(null, location, currentTick, sound, players));
+		entries.add(new Entry(null, location, tick, sound, players));
 	}
 	/**
 	 * Plays the sound attached to the specified target, while only the
@@ -87,7 +86,7 @@ public final class SoundsHandler extends Handler
 	public void playFrom(final Sounds sound, final Entity entity,
 		final Player... players)
 	{
-		entries.add(new Entry(entity, null, currentTick, sound, players));
+		entries.add(new Entry(entity, null, tick, sound, players));
 	}
 
 	// ...

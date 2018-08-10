@@ -9,8 +9,8 @@ import com.hepolite.api.cmd.CmdExecutionException;
 import com.hepolite.api.cmd.GenericArgs;
 import com.hepolite.api.cmd.ICmd;
 import com.hepolite.api.cmd.elements.ICmdElement;
+import com.hepolite.api.config.ConfigFactory;
 import com.hepolite.api.config.IConfig;
-import com.hepolite.api.config.IProperty;
 import com.hepolite.api.config.Property;
 import com.hepolite.api.config.values.Sounds;
 import com.hepolite.api.user.IUser;
@@ -48,14 +48,14 @@ public final class CmdDebugSound implements ICmd
 		final Sounds sound = new Sounds();
 		final Player player = context.get("player", null);
 
-		final IProperty path = new Property("debug.config");
-		final IConfig config = KinetiCore.getConfig(path);
+		final IConfig config = ConfigFactory.create(KinetiCore.getInstance(),
+			new Property("debug", "config"));
 		config.getValue(new Property("sound"), sound);
 		sound.playFrom(player);
 
 		final String size = String.format("'%d'", sound.size());
 		final String name = String.format("'%s'", player.getName());
 		user.sendMessage(Text.of(Color.AQUA, "Playing sound with ", Color.BLUE,
-			size, Color.AQUA, " components to ", Color.BLUE, name));
+			size, Color.AQUA, " component(s) to ", Color.BLUE, name));
 	}
 }

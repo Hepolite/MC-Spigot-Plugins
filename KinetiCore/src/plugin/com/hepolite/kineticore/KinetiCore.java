@@ -7,6 +7,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.hepolite.api.attribute.AttributeDatabase;
 import com.hepolite.api.cmd.CmdDispatcher;
 import com.hepolite.api.cmd.CmdHandler;
+import com.hepolite.api.config.ConfigFactory;
+import com.hepolite.api.config.IConfig;
+import com.hepolite.api.config.IProperty;
 import com.hepolite.api.config.Property;
 import com.hepolite.api.event.Handler;
 import com.hepolite.kineticore.attribute.Attributes;
@@ -52,6 +55,17 @@ public final class KinetiCore extends JavaPlugin
 	public static SoundsHandler getSounds()
 	{
 		return INSTANCE.sounds;
+	}
+
+	/**
+	 * Retrieves a configuration from the specified path
+	 * 
+	 * @param path The path to the configuration on disk
+	 * @return The new config
+	 */
+	public static IConfig getConfig(final IProperty path)
+	{
+		return ConfigFactory.get(INSTANCE, path);
 	}
 
 	// ...

@@ -66,11 +66,11 @@ public final class SoundsHandler extends Handler
 	 * players can hear it. If no players are specified, all players will be
 	 * able to hear the sound.
 	 * 
-	 * @param location The location the sound is attached to
 	 * @param sound The sound to play
+	 * @param location The location the sound is attached to
 	 * @param players The players that should hear the sound
 	 */
-	public void play(final Location location, final Sounds sound,
+	public void playAt(final Sounds sound, final Location location,
 		final Player... players)
 	{
 		entries.add(new Entry(null, location, currentTick, sound, players));
@@ -80,11 +80,11 @@ public final class SoundsHandler extends Handler
 	 * specified players can hear it. If no players are specified, all players
 	 * will be able to hear the sound.
 	 * 
-	 * @param entity The entity the sound is attached to
 	 * @param sound The sound to play
+	 * @param entity The entity the sound is attached to
 	 * @param players The players that should hear the sound
 	 */
-	public void play(final Entity entity, final Sounds sound,
+	public void playFrom(final Sounds sound, final Entity entity,
 		final Player... players)
 	{
 		entries.add(new Entry(entity, null, currentTick, sound, players));

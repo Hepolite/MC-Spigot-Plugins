@@ -121,9 +121,9 @@ public final class Sounds implements IValue
 	 * @param location The location the sound is played from
 	 * @param players The players that should hear the sound
 	 */
-	public void play(final Location location, final Player... players)
+	public void playAt(final Location location, final Player... players)
 	{
-		KinetiCore.getSounds().play(location, this, players);
+		KinetiCore.getSounds().playAt(this, location, players);
 	}
 	/**
 	 * Plays the sound from a specific entity, while only the specified players
@@ -133,9 +133,9 @@ public final class Sounds implements IValue
 	 * @param entity The entity the sound is played from
 	 * @param players The players that should hear the sound
 	 */
-	public void play(final Entity entity, final Player... players)
+	public void playFrom(final Entity entity, final Player... players)
 	{
-		KinetiCore.getSounds().play(entity, this, players);
+		KinetiCore.getSounds().playFrom(this, entity, players);
 	}
 
 	// ...

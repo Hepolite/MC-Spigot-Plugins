@@ -224,8 +224,6 @@ public enum PotionType
 	private boolean duration;
 	private boolean amplifier;
 
-	private PotionType()
-	{}
 	private PotionType(final PotionEffectType type, final boolean duration,
 		final boolean amplifier)
 	{

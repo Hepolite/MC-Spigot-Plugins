@@ -1,6 +1,5 @@
 package com.hepolite.kineticore.cmd;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.hepolite.api.chat.Text;
@@ -40,6 +39,7 @@ public final class CmdDebugPotion implements ICmd
 	{
 		/// @formatter:off
 		return GenericArgs.sequence(
+			GenericArgs.player("player"),
 			GenericArgs.potionType("type"),
 			GenericArgs.optional(GenericArgs.time("duration")),
 			GenericArgs.optional(GenericArgs.intNum("level")),
@@ -59,7 +59,7 @@ public final class CmdDebugPotion implements ICmd
 		effect.ambient = context.get("ambient", false);
 		effect.particles = context.get("particles", true);
 
-		final Player player = Bukkit.getPlayer(user.getUUID());
+		final Player player = context.get("player", null);
 		potion.apply(player);
 	}
 }

@@ -24,10 +24,10 @@ public class CmdElementEnum<T extends Enum<T>> extends CmdElementValue
 	protected Object parse(final IUser user, final CmdArgs args)
 		throws CmdParseException
 	{
-		final String arg = args.consume().replaceAll(" ", "_").toUpperCase();
+		final String arg = args.consume();
 		try
 		{
-			return defaultParser.apply(arg);
+			return defaultParser.apply(arg.replaceAll(" ", "_").toUpperCase());
 		}
 		catch (final IllegalArgumentException e)
 		{

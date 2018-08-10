@@ -7,6 +7,8 @@ import com.hepolite.api.cmd.elements.CmdElementFirst;
 import com.hepolite.api.cmd.elements.CmdElementNone;
 import com.hepolite.api.cmd.elements.CmdElementNumber;
 import com.hepolite.api.cmd.elements.CmdElementOptional;
+import com.hepolite.api.cmd.elements.CmdElementPlayer;
+import com.hepolite.api.cmd.elements.CmdElementPlayerOrUser;
 import com.hepolite.api.cmd.elements.CmdElementSequence;
 import com.hepolite.api.cmd.elements.CmdElementString;
 import com.hepolite.api.cmd.elements.CmdElementTime;
@@ -20,7 +22,7 @@ public final class GenericArgs
 	 * 
 	 * @return The element to match the input
 	 */
-	public final static ICmdElement none()
+	public static final ICmdElement none()
 	{
 		return new CmdElementNone();
 	}
@@ -34,7 +36,7 @@ public final class GenericArgs
 	 * @param children The sub-commands to register
 	 * @return The element to match the input
 	 */
-	public final static ICmdElement children(final ICmd... children)
+	public static final ICmdElement children(final ICmd... children)
 	{
 		return new CmdElementChildren(children);
 	}
@@ -46,7 +48,7 @@ public final class GenericArgs
 	 * @param elements The elements to choose from
 	 * @return The element to match the input
 	 */
-	public final static ICmdElement first(final ICmdElement... elements)
+	public static final ICmdElement first(final ICmdElement... elements)
 	{
 		return new CmdElementFirst(elements);
 	}
@@ -57,7 +59,7 @@ public final class GenericArgs
 	 * @param elements The sequence that is optional
 	 * @return The element to match the input
 	 */
-	public final static ICmdElement optional(final ICmdElement... elements)
+	public static final ICmdElement optional(final ICmdElement... elements)
 	{
 		return new CmdElementOptional(elements);
 	}
@@ -67,7 +69,7 @@ public final class GenericArgs
 	 * @param elements The sequence that is required
 	 * @return The element to match the input
 	 */
-	public final static ICmdElement sequence(final ICmdElement... elements)
+	public static final ICmdElement sequence(final ICmdElement... elements)
 	{
 		return new CmdElementSequence(elements);
 	}
@@ -80,7 +82,7 @@ public final class GenericArgs
 	 * @param key The key to store the value under
 	 * @return The element to match the input
 	 */
-	public final static ICmdElement bool(final String key)
+	public static final ICmdElement bool(final String key)
 	{
 		return new CmdElementBool(key);
 	}
@@ -92,7 +94,7 @@ public final class GenericArgs
 	 * @param key The key to store the value under
 	 * @return The element to match the input
 	 */
-	public final static ICmdElement byteNum(final String key)
+	public static final ICmdElement byteNum(final String key)
 	{
 		return new CmdElementNumber<>(key, Byte::parseByte, Byte::parseByte,
 			"Expected a byte, but '%s' was not");
@@ -103,7 +105,7 @@ public final class GenericArgs
 	 * @param key The key to store the value under
 	 * @return The element to match the input
 	 */
-	public final static ICmdElement doubleNum(final String key)
+	public static final ICmdElement doubleNum(final String key)
 	{
 		return new CmdElementNumber<>(key, Double::parseDouble, null,
 			"Expected a double, but '%s' was not");
@@ -114,7 +116,7 @@ public final class GenericArgs
 	 * @param key The key to store the value under
 	 * @return The element to match the input
 	 */
-	public final static ICmdElement floatNum(final String key)
+	public static final ICmdElement floatNum(final String key)
 	{
 		return new CmdElementNumber<>(key, Float::parseFloat, null,
 			"Expected a float, but '%s' was not");
@@ -126,7 +128,7 @@ public final class GenericArgs
 	 * @param key The key to store the value under
 	 * @return The element to match the input
 	 */
-	public final static ICmdElement intNum(final String key)
+	public static final ICmdElement intNum(final String key)
 	{
 		return new CmdElementNumber<>(key, Integer::parseInt, Integer::parseInt,
 			"Expected an int, but '%s' was not");
@@ -138,7 +140,7 @@ public final class GenericArgs
 	 * @param key The key to store the value under
 	 * @return The element to match the input
 	 */
-	public final static ICmdElement longNum(final String key)
+	public static final ICmdElement longNum(final String key)
 	{
 		return new CmdElementNumber<>(key, Long::parseLong, Long::parseLong,
 			"Expected a long, but '%s' was not");
@@ -150,7 +152,7 @@ public final class GenericArgs
 	 * @param key The key to store the value under
 	 * @return The element to match the input
 	 */
-	public final static ICmdElement shortNum(final String key)
+	public static final ICmdElement shortNum(final String key)
 	{
 		return new CmdElementNumber<>(key, Short::parseShort, Short::parseShort,
 			"Expected a short, but '%s' was not");
@@ -162,7 +164,7 @@ public final class GenericArgs
 	 * @param key The key to store the value under
 	 * @return The element to match the input
 	 */
-	public final static ICmdElement string(final String key)
+	public static final ICmdElement string(final String key)
 	{
 		return new CmdElementString.Single(key);
 	}
@@ -172,7 +174,7 @@ public final class GenericArgs
 	 * @param key The key to store the value under
 	 * @return The element to match the input
 	 */
-	public final static ICmdElement remainder(final String key)
+	public static final ICmdElement remainder(final String key)
 	{
 		return new CmdElementString.Remaining(key);
 	}
@@ -183,7 +185,7 @@ public final class GenericArgs
 	 * @param key The key to store the value under
 	 * @return The element to match the input
 	 */
-	public final static ICmdElement time(final String key)
+	public static final ICmdElement time(final String key)
 	{
 		return new CmdElementTime(key);
 	}
@@ -191,12 +193,33 @@ public final class GenericArgs
 	// ...
 
 	/**
+	 * Requires an argument to be a player type.
+	 * 
+	 * @param key The key to store the value under
+	 * @return The element to match the input
+	 */
+	public static final ICmdElement player(final String key)
+	{
+		return new CmdElementPlayer(key);
+	}
+	/**
+	 * Requires an argument to be a player type.
+	 * 
+	 * @param key The key to store the value under
+	 * @return The element to match the input
+	 */
+	public static final ICmdElement playerOrUser(final String key)
+	{
+		return new CmdElementPlayerOrUser(key);
+	}
+
+	/**
 	 * Requires and argument to be a potion type.
 	 * 
 	 * @param key The key to store the value under
 	 * @return The element to match the input
 	 */
-	public final static ICmdElement potionType(final String key)
+	public static final ICmdElement potionType(final String key)
 	{
 		return new CmdElementEnum<>(key, PotionType::valueOf,
 			"Expected a potion type, but '%s' was not");

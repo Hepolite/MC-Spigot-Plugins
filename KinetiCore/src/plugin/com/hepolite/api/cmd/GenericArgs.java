@@ -8,6 +8,7 @@ import com.hepolite.api.cmd.elements.CmdElementNone;
 import com.hepolite.api.cmd.elements.CmdElementNumber;
 import com.hepolite.api.cmd.elements.CmdElementOptional;
 import com.hepolite.api.cmd.elements.CmdElementPlayer;
+import com.hepolite.api.cmd.elements.CmdElementPlayerOrUser;
 import com.hepolite.api.cmd.elements.CmdElementSequence;
 import com.hepolite.api.cmd.elements.CmdElementString;
 import com.hepolite.api.cmd.elements.CmdElementTime;
@@ -192,7 +193,7 @@ public final class GenericArgs
 	// ...
 
 	/**
-	 * Requires and argument to be a player type.
+	 * Requires an argument to be a player type.
 	 * 
 	 * @param key The key to store the value under
 	 * @return The element to match the input
@@ -201,6 +202,17 @@ public final class GenericArgs
 	{
 		return new CmdElementPlayer(key);
 	}
+	/**
+	 * Requires an argument to be a player type.
+	 * 
+	 * @param key The key to store the value under
+	 * @return The element to match the input
+	 */
+	public static final ICmdElement playerOrUser(final String key)
+	{
+		return new CmdElementPlayerOrUser(key);
+	}
+
 	/**
 	 * Requires and argument to be a potion type.
 	 * 

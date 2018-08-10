@@ -105,20 +105,21 @@ public final class Potion implements IValue
 	@Override
 	public void save(final IConfig config, final IProperty property)
 	{
+		config.set(property.child("chance"), chance);
 		effects.forEach((type, effect) -> config
 			.set(property.child(type.toString()), effect));
-		config.set(property.child("chance"), chance);
 	}
 	@Override
 	public void load(final IConfig config, final IProperty property)
 	{
+		chance = config.getFloat(property.child("chance"), 1.0f);
+		effects.clear();
 		config.properties(property).forEach(key -> {
 			final PotionType type = StringConverter.toEnum(key.name(),
 				PotionType::valueOf);
 			if (type != null)
-				effects.put(type, config.getValue(key, new Effect()));
+				config.getValue(key, add(type));
 		});
-		chance = config.getFloat(property.child("chance"), 1.0f);
 	}
 
 	// ...

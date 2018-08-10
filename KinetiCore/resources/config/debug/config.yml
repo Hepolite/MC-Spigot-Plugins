@@ -1,0 +1,17 @@
+
+# The sound debug command will load up and play this sound
+# for the player targeted by the command. Everybody will be
+# able to hear the sound being played.
+#
+# To actually play the sound, run the command
+#   "kc debug sound [player]"
+sound:
+  # The volume multiplier for the entire sound
+  volume: 1.0
+  
+  # All components are specified by a unique key
+  Sound 1:
+    sound: entity_player_hurt
+    delay: 0t
+    volume: 1.0
+    pitch: 1.0

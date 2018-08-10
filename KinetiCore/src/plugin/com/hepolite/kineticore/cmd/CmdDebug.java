@@ -34,7 +34,8 @@ public final class CmdDebug implements ICmd
 		/// @formatter:off
 		return GenericArgs.children(
 			new CmdDebugAttribute(),
-			new CmdDebugPotion()
+			new CmdDebugPotion(),
+			new CmdDebugSound()
 		);
 		/// @formatter:on
 	}

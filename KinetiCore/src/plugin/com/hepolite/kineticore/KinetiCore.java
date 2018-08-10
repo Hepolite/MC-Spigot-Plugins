@@ -15,6 +15,7 @@ import com.hepolite.kineticore.attribute.Attributes;
 import com.hepolite.kineticore.cmd.CmdDebug;
 import com.hepolite.kineticore.database.Database;
 import com.hepolite.kineticore.database.DatabaseHandler;
+import com.hepolite.kineticore.sound.SoundsHandler;
 
 public final class KinetiCore extends Plugin
 {
@@ -22,12 +23,20 @@ public final class KinetiCore extends Plugin
 
 	private final Database database = new Database();
 	private final AttributeDatabase attributes = new AttributeDatabase();
+	private final SoundsHandler sounds = new SoundsHandler(this);
 
 	private final Collection<IPlugin> plugins = new ArrayList<>();
 	private int currentTick = 0;
 
 	// ...
 
+	/**
+	 * @return The KinetiCore plugin instance
+	 */
+	public static KinetiCore getInstance()
+	{
+		return INSTANCE;
+	}
 	/**
 	 * Register a custom user data handler only in the plugin initialization
 	 * method. Make sure the plugin initialization order is such that KinetiCore
@@ -45,6 +54,14 @@ public final class KinetiCore extends Plugin
 	public static AttributeDatabase getAttributes()
 	{
 		return INSTANCE.attributes;
+	}
+
+	/**
+	 * @return The sounds handler instance
+	 */
+	public static SoundsHandler getSounds()
+	{
+		return INSTANCE.sounds;
 	}
 
 	// ...
@@ -81,6 +98,7 @@ public final class KinetiCore extends Plugin
 		database.register("attributes", attributes);
 
 		// Ensure sub-systems are ready to roll
+		handler.register(sounds);
 		handler.register(new Attributes(this, attributes));
 		handler.register(new DatabaseHandler(this, database));
 	}

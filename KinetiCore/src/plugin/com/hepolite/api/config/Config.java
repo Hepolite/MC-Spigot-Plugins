@@ -124,7 +124,10 @@ public final class Config implements IConfig
 	@Override
 	public void remove(final IProperty property)
 	{
-		config.set(property.path(), null);
+		if (property.path().isEmpty())
+			clear();
+		else
+			config.set(property.path(), null);
 	}
 	@Override
 	public void clear()

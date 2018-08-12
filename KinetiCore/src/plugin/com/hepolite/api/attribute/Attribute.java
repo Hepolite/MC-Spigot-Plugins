@@ -11,21 +11,23 @@ public final class Attribute implements IValue
 {
 	private final ModifierMap modifiers = new ModifierMap();
 
+	private final float defBase;
+	private final float defMin;
+	private final float defMax;
+
 	private float base = 0.0f;
 	private float min = -Float.MAX_VALUE;
 	private float max = Float.MAX_VALUE;
 
 	public Attribute()
-	{}
-	public Attribute(final float base)
 	{
-		this.base = base;
+		this(0.0f, -Float.MAX_VALUE, Float.MAX_VALUE);
 	}
 	public Attribute(final float base, final float min, final float max)
 	{
-		this.base = base;
-		this.min = min;
-		this.max = max;
+		this.defBase = this.base = base;
+		this.defMin = this.min = min;
+		this.defMax = this.max = max;
 	}
 
 	// ...
@@ -183,13 +185,21 @@ public final class Attribute implements IValue
 	@Override
 	public void save(final IConfig config, final IProperty property)
 	{
-		config.set(property.child("base"), base);
+		config.remove(property);
+		if (base != defBase)
+			config.set(property.child("base"), base);
+		if (min != defMin)
+			config.set(property.child("min"), min);
+		if (max != defMax)
+			config.set(property.child("max"), max);
 		config.set(property.child("modifiers"), modifiers);
 	}
 	@Override
 	public void load(final IConfig config, final IProperty property)
 	{
-		base = config.getFloat(property.child("base"));
+		base = config.getFloat(property.child("base"), defBase);
+		min = config.getFloat(property.child("min"), defMin);
+		max = config.getFloat(property.child("max"), defMax);
 		config.getValue(property.child("modifiers"), modifiers);
 	}
 }

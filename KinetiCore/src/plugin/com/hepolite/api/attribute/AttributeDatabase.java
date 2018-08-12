@@ -29,6 +29,21 @@ public final class AttributeDatabase implements IDataHandler
 	}
 
 	/**
+	 * Initializes the data for the provided user. All registered attributes are
+	 * copied over to the user.
+	 * 
+	 * @param user The user to initialize
+	 */
+	private void init(final IUser user)
+	{
+		final AttributeMap map = new AttributeMap();
+		attributes.forEach((k, a) -> {
+			if (!map.containsKey(k))
+				map.put(k, new Attribute(a.getBase(), a.getMin(), a.getMax()));
+		});
+		data.put(user, map);
+	}
+	/**
 	 * Retrieves the attribute with the given key under the given user.
 	 * 
 	 * @param user The user to look at
@@ -37,9 +52,11 @@ public final class AttributeDatabase implements IDataHandler
 	 */
 	public Attribute get(final IUser user, final String key)
 	{
+		if (!data.containsKey(user))
+			init(user);
 		final AttributeMap map = data.get(user);
-		if (map == null || !map.containsKey(key))
-			return new Attribute();
+		if (!map.containsKey(key))
+			throw new IllegalArgumentException("No such attribute");
 		return map.get(key);
 	}
 
@@ -55,12 +72,8 @@ public final class AttributeDatabase implements IDataHandler
 	public void load(final IUser user, final IConfig config,
 		final IProperty property)
 	{
-		final AttributeMap map = new AttributeMap();
-		data.put(user, config.getValue(property, map));
-		attributes.forEach((k, a) -> {
-			if (!map.containsKey(k))
-				map.put(k, new Attribute(a.getBase(), a.getMin(), a.getMax()));
-		});
+		init(user);
+		data.put(user, config.getValue(property, data.get(user)));
 	}
 
 	@Override

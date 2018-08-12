@@ -20,10 +20,9 @@ public class AttributeMap extends HashMap<String, Attribute> implements IValue
 	@Override
 	public void load(final IConfig config, final IProperty property)
 	{
-		clear();
 		config.properties(property).forEach(key -> {
-			final Attribute attr = new Attribute();
-			put(key.name(), config.getValue(property.child(key), attr));
+			if (containsKey(key.name()))
+				config.getValue(key, get(key.name()));
 		});
 	}
 }

@@ -86,12 +86,15 @@ class ConfigTest extends BaseTest
 	@Test
 	void testRemove()
 	{
-		final IConfig config = new Config();
+		final IConfig configA = new Config();
+		final IConfig configB = new Config();
+		configA.add(property, 3);
+		configB.add(property, 3);
 
-		config.add(property, 3);
-		assertTrue(config.has(property));
-		config.remove(property);
-		assertFalse(config.has(property));
+		configA.remove(property);
+		configB.remove(new Property());
+		assertFalse(configA.has(property));
+		assertFalse(configB.has(property));
 	}
 	@Test
 	void testClear()
